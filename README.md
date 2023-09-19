@@ -1,38 +1,12 @@
-# create-svelte
+# Welcome to JourBooks
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Goals for this site:
 
-## Creating a project
+- Create a simple app with the inital focus being on functionality
+- Have all data come from a DB and allow the user to save profile and book information (as well as posts)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Steps to Take
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+1. Create a simple login
+2. Have all data come from a DB and allow the user to save profile and book information (as well as posts)
+3. Utilize a PostgreSQL to save all the data
