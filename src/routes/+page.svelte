@@ -9,9 +9,8 @@
   // let isLoginView = true;
 </script>
 
-<div class="login-page">
-  <div class="login-container">
-    <!-- {#if isLoginView}
+<div class="login-container">
+  <!-- {#if isLoginView}
       <h2>Welcome to JourBooks</h2>
       <form class="login-page-form">
         <div class="input-container">
@@ -30,61 +29,60 @@
         </div>
       </form>
     {:else} -->
-    <h2>Create a New Account</h2>
-    <form class="login-page-form" method="POST" action="?/create" use:enhance>
-      <div class="input-container">
-        <p>User Name:</p>
-        <input
-          class="login-input"
-          type="text"
-          bind:value={userName}
-          name="username"
-          required
-        />
-      </div>
-      <div class="input-container">
-        <p>Email:</p>
-        <input
-          class="login-input"
-          type="text"
-          bind:value={userEmail}
-          name="email"
-          required
-        />
-      </div>
-      <div class="input-container">
-        <p>Password:</p>
-        <input
-          class="login-input"
-          type="password"
-          bind:value={userPassword}
-          name="pass"
-          required
-        />
-      </div>
-      <div class="input-container">
-        <p>Confirm Password:</p>
-        <input
-          class="login-input"
-          type="password"
-          bind:value={confirmPassword}
-          name="confirmPass"
-          required
-        />
-      </div>
-      <div class="login-button-container">
-        <button class="login-button">Cancel</button>
-        <button class="login-button">Create Account</button>
-      </div>
-    </form>
-    {#if form?.error}
-      <div class="error">
-        <p>Error!</p>
-        <p>{form.error}</p>
-      </div>
-    {/if}
-    <!-- {/if} -->
-  </div>
+  <h2>Create a New Account</h2>
+  <form class="login-page-form" method="POST" action="?/create" use:enhance>
+    <div class="input-container">
+      <p>User Name:</p>
+      <input
+        class="login-input"
+        type="text"
+        bind:value={userName}
+        name="username"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <p>Email:</p>
+      <input
+        class="login-input"
+        type="text"
+        bind:value={userEmail}
+        name="email"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <p>Password:</p>
+      <input
+        class="login-input"
+        type="password"
+        bind:value={userPassword}
+        name="pass"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <p>Confirm Password:</p>
+      <input
+        class="login-input"
+        type="password"
+        bind:value={confirmPassword}
+        name="confirmPass"
+        required
+      />
+    </div>
+    <div class="login-button-container">
+      <button class="login-button">Cancel</button>
+      <button class="login-button">Create Account</button>
+    </div>
+  </form>
+  {#if form?.error}
+    <div class="error">
+      <p>Error!</p>
+      <p>{form.error}</p>
+    </div>
+  {/if}
+  <!-- {/if} -->
 </div>
 
 <style>
@@ -99,11 +97,6 @@
     padding: 0.3rem;
     text-align: left;
     margin-top: 1rem;
-  }
-  .login-page {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
   }
   .login-container {
     margin: auto;
