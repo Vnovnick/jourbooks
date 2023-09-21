@@ -2,6 +2,7 @@
   import { enhance } from "$app/forms";
 
   export let form;
+  let userName: string;
   let userEmail: string;
   let userPassword: string;
   let confirmPassword: string;
@@ -31,6 +32,16 @@
     {:else} -->
     <h2>Create a New Account</h2>
     <form class="login-page-form" method="POST" action="?/create" use:enhance>
+      <div class="input-container">
+        <p>User Name:</p>
+        <input
+          class="login-input"
+          type="text"
+          bind:value={userName}
+          name="username"
+          required
+        />
+      </div>
       <div class="input-container">
         <p>Email:</p>
         <input
