@@ -57,7 +57,7 @@
         class="login-input"
         type="password"
         bind:value={userPassword}
-        name="pass"
+        name="password"
         required
       />
     </div>
@@ -67,7 +67,7 @@
         class="login-input"
         type="password"
         bind:value={confirmPassword}
-        name="confirmPass"
+        name="confirmPassword"
         required
       />
     </div>

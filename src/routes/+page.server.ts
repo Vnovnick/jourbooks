@@ -5,15 +5,15 @@ export const actions = {
     const formData = await request.formData();
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
-    const pass = formData.get("password") as string;
-    const confirmPass = formData.get("confirmPass") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
 
-    if (pass !== confirmPass) {
+    if (password !== confirmPassword) {
       return fail(422, {
         error: "Passwords do not match",
       });
     }
 
-    console.log({ username, email, pass, confirmPass });
+    console.log({ username, email, password, confirmPassword });
   },
 };
