@@ -102,6 +102,7 @@
     margin: auto;
     text-align: center;
   }
+
   .login-page-form {
     display: flex;
     flex-direction: column;
@@ -128,6 +129,7 @@
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    font-family: "Lora", serif;
   }
   .login-button-container button:hover {
     background: rgb(20, 13, 5);
