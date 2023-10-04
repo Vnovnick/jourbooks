@@ -1,4 +1,3 @@
-import { json } from "@sveltejs/kit";
 import axios from "axios";
 export const GET = async ({ request }) => {
   const authHeader = request.headers.get("Authorization");
