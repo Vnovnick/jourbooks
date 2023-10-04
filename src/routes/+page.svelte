@@ -30,7 +30,7 @@
       </form>
     {:else} -->
   <h2>Create a New Account</h2>
-  <form class="login-page-form" method="POST" action="?/create" use:enhance>
+  <form class="login-page-form" method="POST" action="?/register" use:enhance>
     <div class="input-container">
       <p>User Name:</p>
       <input
@@ -73,16 +73,20 @@
     </div>
     <div class="login-button-container">
       <button class="login-button">Cancel</button>
-      <button class="login-button">Create Account</button>
+      <button class="login-button" type="submit">Create Account</button>
     </div>
   </form>
+  {#if form?.success}
+    <div class="success">
+      <p>Success! Your account information has been saved</p>
+    </div>
+  {/if}
   {#if form?.error}
     <div class="error">
       <p>Error!</p>
       <p>{form.error}</p>
     </div>
   {/if}
-  <!-- {/if} -->
 </div>
 
 <style>
@@ -91,6 +95,18 @@
     border-bottom: 1px rgb(247, 116, 116);
     background-color: rgb(253, 231, 231);
     border: 0.1rem red solid;
+    width: 50%;
+    margin: auto;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    text-align: left;
+    margin-top: 1rem;
+  }
+  .success {
+    color: green;
+    border-bottom: 1px rgb(148, 247, 148);
+    background-color: rgb(232, 253, 231);
+    border: 0.1rem green solid;
     width: 50%;
     margin: auto;
     border-radius: 0.5rem;
