@@ -17,7 +17,7 @@
   use:enhance
 >
   <p class="text-xl font-semibold text-center">Create a New Account</p>
-  <div class="w-full justify-between flex">
+  <div class="w-full justify-between flex items-center">
     <p>User Name:</p>
     <input
       class={loginInputs}
@@ -27,7 +27,7 @@
       required
     />
   </div>
-  <div class="w-full justify-between flex">
+  <div class="w-full justify-between flex items-center">
     <p>Email:</p>
     <input
       class={loginInputs}
@@ -37,7 +37,7 @@
       required
     />
   </div>
-  <div class="w-full justify-between flex">
+  <div class="w-full justify-between flex items-center">
     <p>Password:</p>
     <input
       class={loginInputs}
@@ -47,7 +47,7 @@
       required
     />
   </div>
-  <div class="w-full justify-between flex">
+  <div class="w-full justify-between flex items-center">
     <p>Confirm Password:</p>
     <input
       class={loginInputs}

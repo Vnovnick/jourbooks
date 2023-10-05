@@ -17,11 +17,11 @@
   {#if isLoginView}
     <form class="w-[550px] flex flex-col gap-y-4 my-auto">
       <p class="text-xl font-semibold text-center">Welcome to Jourbooks</p>
-      <div class="w-full justify-between flex">
+      <div class="w-full justify-between flex items-center">
         <p>Email:</p>
         <input class={loginInputs} type="text" bind:value={userEmail} />
       </div>
-      <div class="w-full justify-between flex">
+      <div class="w-full justify-between flex items-center">
         <p>Password:</p>
         <input class={loginInputs} type="text" bind:value={userPassword} />
       </div>
