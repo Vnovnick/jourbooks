@@ -6,20 +6,23 @@
   let userEmail: string;
   let userPassword: string;
   let confirmPassword: string;
-  // let isLoginView = true;
+  const loginInputs = "w-[300px] rounded-md h-10 pl-2";
+  const formMessages = "w-[450px] m-auto rounded-md p-1 text-left";
 </script>
 
-<div class="login-container">
+<div
+  class="xl:w-[1200px] w-[600px] h-[400px] m-auto flex flex-col xl:flex-row justify-between"
+>
   <!-- {#if isLoginView}
       <h2>Welcome to JourBooks</h2>
       <form class="login-page-form">
-        <div class="input-container">
+        <div class="w-full justify-between flex">
           <p>Email:</p>
-          <input class="login-input" type="text" bind:value={userEmail} />
+          <input class={loginInputs} type="text" bind:value={userEmail} />
         </div>
-        <div class="input-container">
+        <div class="w-full justify-between flex">
           <p>Password:</p>
-          <input class="login-input" type="text" bind:value={userPassword} />
+          <input class={loginInputs} type="text" bind:value={userPassword} />
         </div>
         <div class="login-button-container">
           <button class="login-button">Login</button>
@@ -29,126 +32,79 @@
         </div>
       </form>
     {:else} -->
-  <h2>Create a New Account</h2>
-  <form class="login-page-form" method="POST" action="?/register" use:enhance>
-    <div class="input-container">
+  <form
+    class="w-[550px] flex flex-col gap-y-4 my-auto"
+    method="post"
+    action="?/register"
+    use:enhance
+  >
+    <p class="text-xl font-semibold text-center">Create a New Account</p>
+    <div class="w-full justify-between flex">
       <p>User Name:</p>
       <input
-        class="login-input"
+        class={loginInputs}
         type="text"
         bind:value={userName}
         name="username"
         required
       />
     </div>
-    <div class="input-container">
+    <div class="w-full justify-between flex">
       <p>Email:</p>
       <input
-        class="login-input"
+        class={loginInputs}
         type="text"
         bind:value={userEmail}
         name="email"
         required
       />
     </div>
-    <div class="input-container">
+    <div class="w-full justify-between flex">
       <p>Password:</p>
       <input
-        class="login-input"
+        class={loginInputs}
         type="password"
         bind:value={userPassword}
         name="password"
         required
       />
     </div>
-    <div class="input-container">
+    <div class="w-full justify-between flex">
       <p>Confirm Password:</p>
       <input
-        class="login-input"
+        class={loginInputs}
         type="password"
         bind:value={confirmPassword}
         name="confirmPassword"
         required
       />
     </div>
-    <div class="login-button-container">
-      <button class="login-button">Cancel</button>
-      <button class="login-button" type="submit">Create Account</button>
+    <div class="flex mx-auto gap-5 text-sm">
+      <button
+        class="bg-green-200 rounded-md p-1 hover:bg-black hover:text-white"
+        type="button">Cancel</button
+      >
+      <button
+        class="bg-green-200 rounded-md p-1 hover:bg-black hover:text-white"
+        type="submit">Create Account</button
+      >
     </div>
   </form>
-  {#if form?.success}
-    <div class="success">
-      <p>Success! Your account information has been saved</p>
-    </div>
-  {/if}
-  {#if form?.error}
-    <div class="error">
-      <p>Error!</p>
-      <p>{form.error}</p>
-    </div>
-  {/if}
+  <div class="flex w-[550px]">
+    {#if form?.success}
+      <div
+        class={`text-green-800 bg-green-100 border border-green-700 ${formMessages}`}
+      >
+        <p>Success! Your account information has been saved</p>
+      </div>
+    {/if}
+    {#if form?.error}
+      <div
+        class={`text-red-500 bg-red-100 border border-red-700 ${formMessages}`}
+      >
+        <p>Error!</p>
+        <p>{form.error}</p>
+      </div>
+    {/if}
+  </div>
 </div>
-
-<style>
-  .error {
-    color: red;
-    border-bottom: 1px rgb(247, 116, 116);
-    background-color: rgb(253, 231, 231);
-    border: 0.1rem red solid;
-    width: 50%;
-    margin: auto;
-    border-radius: 0.5rem;
-    padding: 0.3rem;
-    text-align: left;
-    margin-top: 1rem;
-  }
-  .success {
-    color: green;
-    border-bottom: 1px rgb(148, 247, 148);
-    background-color: rgb(232, 253, 231);
-    border: 0.1rem green solid;
-    width: 50%;
-    margin: auto;
-    border-radius: 0.5rem;
-    padding: 0.3rem;
-    text-align: left;
-    margin-top: 1rem;
-  }
-  .login-container {
-    margin: auto;
-    text-align: center;
-  }
-
-  .login-page-form {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    row-gap: 10px;
-    text-align: left;
-  }
-  .login-input {
-    width: 300px;
-  }
-  .input-container {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-  }
-  .login-button-container {
-    display: flex;
-    margin-inline: auto;
-    column-gap: 0.5rem;
-  }
-  .login-button-container button {
-    background-color: rgb(121, 250, 185);
-    border-radius: 0.5rem;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    font-family: "Lora", serif;
-  }
-  .login-button-container button:hover {
-    background: rgb(20, 13, 5);
-    color: white;
-  }
-</style>
