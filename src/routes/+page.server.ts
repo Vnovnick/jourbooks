@@ -2,6 +2,32 @@ import { fail } from "@sveltejs/kit";
 import axios from "axios";
 
 export const actions = {
+  login: async ({ request }) => {
+    let formError: string = "Error With User Login";
+    let formSuccess: string = "Successful login!";
+    const formData = await request.formData();
+    const email = formData.get("loginEmail") as string;
+    const password = formData.get("loginPassword") as string;
+    const body = {
+      email,
+      password,
+    };
+    // console.log("action body", body);
+
+    const res = await axios
+      .post("http://localhost:3000/login", body)
+      .catch((error) => {
+        console.log(error);
+        formError = error.response.data?.message;
+        return fail(500, { error: formError });
+      });
+    console.log("response data", res.data);
+    if (res.status === 200) {
+      // change to show confirmation message or something
+      return { success: true, data: JSON.stringify(res.data) };
+    }
+    return fail(500, { error: formError });
+  },
   register: async ({ request }) => {
     let formError: string = "Error Creating New User";
     const formData = await request.formData();
@@ -32,7 +58,6 @@ export const actions = {
         formError = error.response.data.message;
         return fail(500, { error: formError });
       });
-
     if (res.status === 201) return { success: true };
     return fail(500, { error: formError });
   },
