@@ -2,9 +2,8 @@ import { fail } from "@sveltejs/kit";
 import axios from "axios";
 
 export const actions = {
-  login: async ({ request }) => {
+  login: async ({ request, cookies }) => {
     let formError: string = "Error With User Login";
-    let formSuccess: string = "Successful login!";
     const formData = await request.formData();
     const email = formData.get("loginEmail") as string;
     const password = formData.get("loginPassword") as string;
@@ -21,10 +20,17 @@ export const actions = {
         formError = error.response.data?.message;
         return fail(500, { error: formError });
       });
-    console.log("response data", res.data);
     if (res.status === 200) {
-      // change to show confirmation message or something
-      return { success: true, data: JSON.stringify(res.data) };
+      // not tested yet (10/16)
+      console.log("User Logged in -", JSON.stringify(res.data));
+      cookies.set("session_id", res.data.id, {
+        path: "/",
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+        maxAge: 60 * 60 * 24 * 7,
+      });
+      return { success: true, data: "Successfully logged in!" };
     }
     return fail(500, { error: formError });
   },
