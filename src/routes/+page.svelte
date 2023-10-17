@@ -58,7 +58,7 @@
       <div
         class={`text-green-800 bg-green-100 border border-green-700 ${formMessages}`}
       >
-        <p>{form.data}</p>
+        <!-- <p>{form.data}</p> -->
       </div>
     {/if}
     {#if form?.error}

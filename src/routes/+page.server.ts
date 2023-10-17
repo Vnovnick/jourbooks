@@ -1,5 +1,13 @@
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import axios from "axios";
+import { dev } from "$app/environment";
+
+export const load = async ({ cookies }) => {
+  const userSessionCookie = cookies.get("session_id");
+  if (userSessionCookie) {
+    throw redirect(303, "/home");
+  }
+};
 
 export const actions = {
   login: async ({ request, cookies }) => {
@@ -27,10 +35,11 @@ export const actions = {
         path: "/",
         httpOnly: true,
         sameSite: "strict",
-        secure: false,
+        secure: !dev,
         maxAge: 60 * 60 * 24 * 7,
       });
-      return { success: true, data: "Successfully logged in!" };
+      throw redirect(303, "/home");
+      // return { success: true, data: "Successfully logged in!" };
     }
     return fail(500, { error: formError });
   },
