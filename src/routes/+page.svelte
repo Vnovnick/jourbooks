@@ -1,73 +1,24 @@
-<script lang="ts">
-  import Register from "./Register.svelte";
-  import { enhance } from "$app/forms";
-
-  export let form;
-  let loginEmail: string;
-  let loginPassword: string;
-  let isLoginView = true;
-  const loginInputs = "w-[300px] rounded-md h-10 pl-2";
-  const formMessages = "w-[450px] m-auto rounded-md p-1 text-left";
-  const buttonStyling =
-    "bg-green-200 rounded-md p-1 hover:bg-black hover:text-white";
-</script>
-
-<div
-  class="xl:w-[1200px] w-[600px] h-[400px] m-auto flex flex-col xl:flex-row justify-between"
->
-  {#if isLoginView}
-    <form
-      class="w-[550px] flex flex-col gap-y-4 my-auto"
-      method="post"
-      action="?/login"
-      use:enhance
-    >
-      <p class="text-xl font-semibold text-center">Welcome to Jourbooks</p>
-      <div class="w-full justify-between flex items-center">
-        <p>Email:</p>
-        <input
-          class={loginInputs}
-          type="text"
-          name="loginEmail"
-          bind:value={loginEmail}
-          required
-        />
-      </div>
-      <div class="w-full justify-between flex items-center">
-        <p>Password:</p>
-        <input
-          class={loginInputs}
-          type="password"
-          name="loginPassword"
-          bind:value={loginPassword}
-          required
-        />
-      </div>
-      <div class="flex mx-auto gap-5 text-sm">
-        <button class={buttonStyling} type="submit">Login</button>
-        <button class={buttonStyling} on:click={() => (isLoginView = false)}
-          >Sign Up</button
-        >
-      </div>
-    </form>
-  {:else}
-    <Register {loginInputs} {buttonStyling} bind:isLoginView />
-  {/if}
-  <div class="flex w-[550px]">
-    {#if form?.success}
-      <div
-        class={`text-green-800 bg-green-100 border border-green-700 ${formMessages}`}
+<div class="h-[800px] w-[1024px] m-auto flex">
+  <div class="flex flex-col w-full justify-center gap-y-5">
+    <div class="flex h-fit w-4/5 mx-auto text-base justify-around">
+      <a
+        href="/login"
+        class="p-1.5 bg-green-50 rounded-lg hover:bg-black hover:text-green-50"
+        >Login</a
       >
-        <!-- <p>{form.data}</p> -->
-      </div>
-    {/if}
-    {#if form?.error}
-      <div
-        class={`text-red-500 bg-red-100 border border-red-700 ${formMessages}`}
+      <a
+        href="/register"
+        class="p-1.5 bg-green-50 rounded-lg hover:bg-black hover:text-green-50"
+        >Register</a
       >
-        <p>Error!</p>
-        <p>{form.error}</p>
+    </div>
+    <div class="flex w-full">
+      <div class="h-[400px] w-3/5 my-auto bg-green-50 flex">
+        <p class="text-black text-6xl my-auto ml-auto mr-2">Jour</p>
       </div>
-    {/if}
+      <div class="h-[400px] w-2/5 my-auto flex">
+        <p class="text-green-50 text-6xl my-auto mr-auto ml-2">Books</p>
+      </div>
+    </div>
   </div>
 </div>
