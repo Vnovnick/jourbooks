@@ -1,14 +1,14 @@
 <div class="h-[800px] w-[1024px] m-auto flex">
   <div class="flex flex-col w-full justify-center gap-y-5">
-    <div class="flex h-fit w-4/5 mx-auto text-base justify-around">
+    <div class="flex h-fit w-3/5 text-base justify-end gap-7">
       <a
         href="/login"
-        class="p-1.5 bg-green-50 rounded-lg hover:bg-black hover:text-green-50"
+        class="p-1.5 bg-green-50 rounded-sm hover:bg-black hover:text-green-50"
         >Login</a
       >
       <a
         href="/register"
-        class="p-1.5 bg-green-50 rounded-lg hover:bg-black hover:text-green-50"
+        class="p-1.5 bg-green-50 rounded-sm hover:bg-black hover:text-green-50"
         >Register</a
       >
     </div>

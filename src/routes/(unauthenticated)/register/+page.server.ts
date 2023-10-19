@@ -1,5 +1,5 @@
 import axios from "axios";
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 
 export const actions = {
   register: async ({ request }) => {
@@ -9,6 +9,11 @@ export const actions = {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (!username || !email || !password || !confirmPassword) {
+      return fail(404, { error: "Please fill out all values." });
+    }
+
     const body = {
       username,
       email,
@@ -32,7 +37,7 @@ export const actions = {
         formError = error.response.data.message;
         return fail(500, { error: formError });
       });
-    if (res.status === 201) return { success: true };
+    if (res.status === 201) throw redirect(303, "/home");
     return fail(500, { error: formError });
   },
 };
