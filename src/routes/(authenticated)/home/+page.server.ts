@@ -8,7 +8,7 @@ export const load = async ({ cookies }) => {
     throw redirect(303, "/");
   }
   const res = await axios
-    .get(`http://localhost:3000/user/${userSessionCookie}`)
+    .get(`http://localhost:3000/v1/user/${userSessionCookie}`)
     .catch((error) => {
       console.log(error);
       return fail(500, { error: "Error retrieving user" });

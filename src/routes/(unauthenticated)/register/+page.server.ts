@@ -31,7 +31,7 @@ export const actions = {
     }
 
     const res = await axios
-      .post("http://localhost:3000/register", body)
+      .post("http://localhost:3000/v1/register", body)
       .catch((error) => {
         console.log(error);
         formError = error.response.data.message;
