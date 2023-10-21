@@ -17,6 +17,7 @@
       .filter((s) => !!s.length)
       .join("+");
 
+    // need to create additional requests to get covers for all items
     if (convertedSearch.length > 0) {
       const res = await axios.get(
         `https://openlibrary.org/search.json?q=${convertedSearch}`
