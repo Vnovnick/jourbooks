@@ -1,19 +1,36 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
   import { searchPlaceholders } from "$lib/browsebooksDefinitions";
+  import axios from "axios";
 
   let bookSearch: string;
+  let searchResponse: any[] = [];
+  let numResults: number;
+  let bookSearchError: string | null = null;
   const placeholder =
     searchPlaceholders[Math.floor(Math.random() * searchPlaceholders.length)];
 
-  const handleBookSearch = (e: SubmitEvent) => {
+  const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
     const convertedSearch = bookSearch
       .trim()
       .split(" ")
       .filter((s) => !!s.length)
       .join("+");
-    console.log(convertedSearch);
+
+    if (convertedSearch.length > 0) {
+      const res = await axios.get(
+        `https://openlibrary.org/search.json?q=${convertedSearch}`
+      );
+      console.log(res.data);
+
+      if (res.status === 200) {
+        searchResponse = res.data.docs;
+        numResults = res.data.numFound;
+      } else {
+        bookSearchError = res.data;
+        console.log(bookSearchError);
+      }
+    }
   };
 </script>
 
@@ -27,7 +44,7 @@
   </nav>
   <p class="text-5xl text-center mt-10">Browse Books</p>
   <form
-    class="flex gap-x-2 items-center mt-10 justify-center"
+    class="flex gap-x-2 mt-10 mb-5 justify-center"
     on:submit={handleBookSearch}
   >
     <input
@@ -42,4 +59,25 @@
       >Search</button
     >
   </form>
+  <div
+    class={`flex gap-x-4 mx-auto items-center ${
+      !!searchResponse.length ? "" : "invisible"
+    }`}
+  >
+    <p class="w-36">{numResults} Results</p>
+    <button
+      type="button"
+      class="p-1.5 bg-black text-green-50 rounded-sm hover:bg-black h-fit"
+      on:click={() => {
+        searchResponse = [];
+      }}>Clear Results</button
+    >
+  </div>
+  {#if searchResponse.length > 0}
+    <div class="min-h overflow-auto px-5">
+      {#each searchResponse as book}
+        <p>{book.title}</p>
+      {/each}
+    </div>
+  {/if}
 </div>

@@ -2,15 +2,12 @@
   import "../app.css";
 </script>
 
-<div class="page-container">
+<div class="page-container h-full w-full flex overflow-auto">
   <slot />
 </div>
 
 <style>
   .page-container {
-    display: flex;
-    height: 100%;
-    width: 100%;
     background: linear-gradient(300deg, #0a9708, #30c88e, #5ce7b1);
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
