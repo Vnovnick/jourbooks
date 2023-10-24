@@ -1,4 +1,4 @@
-<div class="h-full max-h-[800px] w-[1024px] m-auto flex">
+<div class="h-full w-[1024px] m-auto flex">
   <div class="flex flex-col w-full justify-center gap-y-5">
     <div class="flex h-fit w-3/5 text-base justify-end gap-7">
       <a

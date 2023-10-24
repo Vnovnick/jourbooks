@@ -11,6 +11,7 @@
 
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
+    searchResponse = []
     const convertedSearch = bookSearch
       .trim()
       .split(" ")
@@ -35,7 +36,7 @@
   };
 </script>
 
-<div class="m-auto w-[1024px] bg-green-50 flex flex-col">
+<div class="m-auto w-[1024px] bg-green-50 flex flex-col overflow-auto">
   <nav class="mx-auto flex w-4/5 gap-x-10">
     <a href="/home">Home</a>
     <a href="/browsebooks">Browse Books</a>
@@ -75,9 +76,16 @@
     >
   </div>
   {#if searchResponse.length > 0}
-    <div class="min-h overflow-auto px-5">
+    <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <p>{book.title}</p>
+        <div class="flex gap-x-4 items-center">
+          {#if book.cover_edition_key}
+            <img loading="lazy" src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`} alt={`Cover for ${book.title}`} class="h-[230px] w-44 object-scale-down" />
+          {:else}
+            <p class="h-[230px] w-44 text-center">No Image <br/>Available</p>
+          {/if}
+          <p>{book.title}</p>
+        </div>
       {/each}
     </div>
   {/if}
