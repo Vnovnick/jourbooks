@@ -18,7 +18,6 @@
       .filter((s) => !!s.length)
       .join("+");
 
-    // need to create additional requests to get covers for all items
     if (convertedSearch.length > 0) {
       const res = await axios.get(
         `https://openlibrary.org/search.json?q=${convertedSearch}`
@@ -34,6 +33,7 @@
       }
     }
   };
+  // scroll pushing middle slot over; find a way to fix the height or something'
 </script>
 
 <div class="m-auto w-[1024px] bg-green-50 flex flex-col overflow-auto">
