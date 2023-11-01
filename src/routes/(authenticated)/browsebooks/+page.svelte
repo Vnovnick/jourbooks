@@ -11,7 +11,7 @@
 
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
-    searchResponse = []
+    searchResponse = [];
     const convertedSearch = bookSearch
       .trim()
       .split(" ")
@@ -78,13 +78,37 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <div class="flex gap-x-4 items-center">
+        <div class="flex gap-x-4 items-center border-b border-black/50 pb-2">
           {#if book.cover_edition_key}
-            <img loading="lazy" src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`} alt={`Cover for ${book.title}`} class="h-[230px] w-44 object-scale-down" />
+            <img
+              loading="lazy"
+              src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`}
+              alt={`Cover for ${book.title}`}
+              class="h-[230px] w-44 object-scale-down"
+            />
           {:else}
-            <p class="h-[230px] w-44 text-center">No Image <br/>Available</p>
+            <div
+              class="h-[230px] w-[176px] text-center flex border border-dashed border-black"
+            >
+              <p class="m-auto">No Image <br />Available</p>
+            </div>
           {/if}
-          <p>{book.title}</p>
+          <div class="flex flex-col justify-between h-[230px]">
+            <div>
+              <p>{book.title}</p>
+              {#if !!book.author_name?.length}
+                <p class="truncate w-60">{book.author_name[0]}</p>
+              {/if}
+              {#if book.first_publish_year}
+                <p>{book.first_publish_year}</p>
+              {/if}
+            </div>
+            <div>
+              {#if !!book.publisher?.length}
+                <p>Published By: {book.publisher[0]}</p>
+              {/if}
+            </div>
+          </div>
         </div>
       {/each}
     </div>
