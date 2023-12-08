@@ -1,6 +1,8 @@
 <script lang="ts">
   import { searchPlaceholders } from "$lib/browsebooksDefinitions";
+  import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
+  import BookSearchEntry from "./BookSearchEntry.svelte";
 
   let bookSearch: string;
   let searchResponse: any[] = [];
@@ -55,11 +57,7 @@
       {placeholder}
       bind:value={bookSearch}
     />
-    <button
-      type="submit"
-      class="p-1.5 bg-black text-green-50 rounded-sm hover:bg-black h-fit"
-      >Search</button
-    >
+    <button type="submit" class={primaryActionButton}>Search</button>
   </form>
   <div
     class={`flex gap-x-4 mx-auto items-center ${
@@ -69,7 +67,7 @@
     <p class="w-36">{numResults} Results</p>
     <button
       type="button"
-      class="p-1.5 bg-black text-green-50 rounded-sm hover:bg-black h-fit"
+      class={primaryActionButton}
       on:click={() => {
         searchResponse = [];
       }}>Clear Results</button
@@ -78,38 +76,7 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <div class="flex gap-x-4 items-center border-b border-black/50 pb-2">
-          {#if book.cover_edition_key}
-            <img
-              loading="lazy"
-              src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`}
-              alt={`Cover for ${book.title}`}
-              class="h-[230px] w-44 object-scale-down"
-            />
-          {:else}
-            <div
-              class="h-[230px] w-[176px] text-center flex border border-dashed border-black"
-            >
-              <p class="m-auto">No Image <br />Available</p>
-            </div>
-          {/if}
-          <div class="flex flex-col justify-between h-[230px]">
-            <div>
-              <p>{book.title}</p>
-              {#if !!book.author_name?.length}
-                <p class="truncate w-60">{book.author_name[0]}</p>
-              {/if}
-              {#if book.first_publish_year}
-                <p>{book.first_publish_year}</p>
-              {/if}
-            </div>
-            <div>
-              {#if !!book.publisher?.length}
-                <p>Published By: {book.publisher[0]}</p>
-              {/if}
-            </div>
-          </div>
-        </div>
+        <BookSearchEntry {book} />
       {/each}
     </div>
   {/if}

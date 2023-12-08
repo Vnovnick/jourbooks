@@ -1,6 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
 import axios from "axios";
 import { dev } from "$app/environment";
+import { expressServerURL } from "$lib/endpointAssets";
 
 export const actions = {
   login: async ({ request, cookies }) => {
@@ -19,7 +20,7 @@ export const actions = {
     };
 
     const res = await axios
-      .post("http://localhost:3000/v1/login", body)
+      .post(`${expressServerURL}/v1/login`, body)
       .catch((error) => {
         console.log(error);
         formError = error.response.data?.message;
