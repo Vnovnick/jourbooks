@@ -5,9 +5,9 @@ A site to shelve books, keep track of reading progress, chat with other readers,
 ## Currently In-Progress Features
 
 - Shelving and Favoriting Books
-  - Creating tables in PostgreSQL to save books or a given user
 
 ## Completed Features
 
 - Create a simple login
 - Utilize Open Library's Search API to allow users to search for books
+- (12/8) Add shelve "read" books request to entry component and test new endpoint
