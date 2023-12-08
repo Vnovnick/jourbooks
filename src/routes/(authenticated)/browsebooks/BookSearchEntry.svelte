@@ -2,17 +2,32 @@
   import { expressServerURL } from "$lib/endpointAssets";
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
+  import RatingsInput from "./RatingsInput.svelte";
 
   let isSaveOptionsOpen = false;
+  let ratingsInputShown = false;
+  // temp saved state to test
+  let isSaved = false;
+  let bookRating = 0;
   export let book: any;
   export let userId: string;
-  const markBookAsRead = () => {
-    axios.post(`${expressServerURL}/v1/book/shelve_read/${userId}`, {
-      title: book.title,
-      yearPublished: book.first_publish_year ?? "",
-      pageCount: book.number_of_pages_median ?? "",
-      author: !!book.author_name?.length ? book.author_name[0] : "",
-    });
+  const markBookAsRead = async (rating: number) => {
+    const res = await axios.post(
+      `http://localhost:3000/v1/book/shelve_read/${userId}`,
+      {
+        title: book.title,
+        publicationYear: book.first_publish_year ?? "",
+        pageCount: book.number_of_pages_median ?? "",
+        author: !!book.author_name?.length ? book.author_name[0] : "",
+        rating,
+        olid: book.edition_key[0],
+      }
+    );
+    console.log(res.data);
+
+    if (res.status === 201) {
+      isSaved = true;
+    }
   };
 </script>
 
@@ -50,10 +65,35 @@
       {/if}
     </div>
   </div>
-  <div class="ml-auto mb-auto">
-    <button type="button" class={primaryActionButton}>Save</button>
+  <div class="ml-auto mb-auto w-36 items-end flex flex-col">
+    {#if isSaved}
+      <div class={`!bg-green-800 ${primaryActionButton}`}>Saved</div>
+    {:else}
+      <button
+        type="button"
+        class={`w-16 ${primaryActionButton}`}
+        on:click={() => {
+          isSaveOptionsOpen = !isSaveOptionsOpen;
+          ratingsInputShown = false;
+        }}>{isSaveOptionsOpen ? "Cancel" : "Save"}</button
+      >
+    {/if}
     {#if isSaveOptionsOpen}
-      <button type="button">Mark as Read</button>
+      <div
+        class="flex flex-col border-black border bg-green-100/40 rounded-lg w-full mt-2 h-20"
+      >
+        {#if ratingsInputShown}
+          <RatingsInput bind:bookRating {markBookAsRead} />
+        {:else}
+          <button
+            type="button"
+            class="m-auto border-black hover:bg-black hover:text-white rounded-lg px-3 py-1"
+            on:click={() => {
+              ratingsInputShown = true;
+            }}>Mark as Read</button
+          >
+        {/if}
+      </div>
     {/if}
   </div>
 </div>

@@ -37,7 +37,6 @@
       }
     }
   };
-  // scroll pushing middle slot over; find a way to fix the height or something'
 </script>
 
 <div class="m-auto w-[1024px] bg-green-50 flex flex-col overflow-auto">
