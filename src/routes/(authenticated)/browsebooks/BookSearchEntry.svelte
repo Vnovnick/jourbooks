@@ -5,14 +5,15 @@
 
   let isSaveOptionsOpen = false;
   export let book: any;
-  //   const markBookAsRead = () => {
-  //     axios.post(`${expressServerURL}/v1/book/shelve_read/${}`, {
-  //       title: book.title,
-  //       yearPublished: book.first_publish_year ?? "",
-  //       pageCount: book.number_of_pages_median ?? "",
-  //       author: !!book.author_name?.length ? book.author_name[0] : "",
-  //     });
-  //   };
+  export let userId: string;
+  const markBookAsRead = () => {
+    axios.post(`${expressServerURL}/v1/book/shelve_read/${userId}`, {
+      title: book.title,
+      yearPublished: book.first_publish_year ?? "",
+      pageCount: book.number_of_pages_median ?? "",
+      author: !!book.author_name?.length ? book.author_name[0] : "",
+    });
+  };
 </script>
 
 <div class="flex gap-x-4 items-center border-b border-black/50 pb-2">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { PageData } from "./$types";
+  export let data: PageData;
   import { searchPlaceholders } from "$lib/browsebooksDefinitions";
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
@@ -76,7 +78,7 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <BookSearchEntry {book} />
+        <BookSearchEntry {book} userId={data.id} />
       {/each}
     </div>
   {/if}
