@@ -77,7 +77,7 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <BookSearchEntry {book} userId={data.id} />
+        <BookSearchEntry {book} userId={data.userData.id} />
       {/each}
     </div>
   {/if}

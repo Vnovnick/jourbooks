@@ -8,14 +8,14 @@ export const load = async ({ cookies }) => {
   if (!userSessionCookie) {
     throw redirect(303, "/");
   }
-  const res = await axios
+  const userRes = await axios
     .get(`${expressServerURL}/v1/user/${userSessionCookie}`)
     .catch((error) => {
       console.log(error);
       return fail(500, { error: "Error retrieving user" });
     });
 
-  return res.data;
+  return { userData: userRes.data };
 };
 
 export const actions = {

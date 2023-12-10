@@ -6,6 +6,7 @@
 
   let isSaveOptionsOpen = false;
   let ratingsInputShown = false;
+
   // temp saved state to test
   let isSaved = false;
   let bookRating = 0;
@@ -13,7 +14,7 @@
   export let userId: string;
   const markBookAsRead = async (rating: number) => {
     const res = await axios.post(
-      `http://localhost:3000/v1/book/shelve_read/${userId}`,
+      `${expressServerURL}/v1/book/shelve_read/${userId}`,
       {
         title: book.title,
         publicationYear: book.first_publish_year ?? "",
@@ -27,6 +28,8 @@
 
     if (res.status === 201) {
       isSaved = true;
+      ratingsInputShown = false;
+      isSaveOptionsOpen = false;
     }
   };
 </script>
@@ -67,7 +70,7 @@
   </div>
   <div class="ml-auto mb-auto w-36 items-end flex flex-col">
     {#if isSaved}
-      <div class={`!bg-green-800 ${primaryActionButton}`}>Saved</div>
+      <div class={`!bg-amber-800 ${primaryActionButton}`}>Read</div>
     {:else}
       <button
         type="button"
