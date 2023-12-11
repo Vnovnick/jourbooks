@@ -1,10 +1,11 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
-  export let data: PageData;
+  export let data;
   import { searchPlaceholders } from "$lib/browsebooksDefinitions";
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
+  import type { ReadBooks } from "$lib/typesAndInterfaces";
+  import { expressServerURL } from "$lib/endpointAssets";
 
   let bookSearch: string;
   let searchResponse: any[] = [];
@@ -29,7 +30,24 @@
       console.log(res.data);
 
       if (res.status === 200) {
-        searchResponse = res.data.docs;
+        const readBooksRes = await axios.get(
+          `${expressServerURL}/v1/book/read/${data.userData.id}`
+        );
+
+        if (readBooksRes.status !== 200) {
+          console.log("Error retrieving books:", readBooksRes.data);
+        }
+        console.log(readBooksRes.data);
+
+        searchResponse = res.data.docs.map((doc: any) => {
+          const docOlid = doc.key.slice(7);
+          if (
+            readBooksRes.data.some((book: ReadBooks) => book.olid === docOlid)
+          ) {
+            doc["assigned_shelf"] = "read";
+          }
+          return doc;
+        });
         numResults = res.data.numFound;
       } else {
         bookSearchError = res.data;

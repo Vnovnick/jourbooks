@@ -21,7 +21,7 @@
         pageCount: book.number_of_pages_median ?? "",
         author: !!book.author_name?.length ? book.author_name[0] : "",
         rating,
-        olid: book.edition_key[0],
+        olid: book.key.slice(7),
       }
     );
     console.log(res.data);
@@ -69,7 +69,7 @@
     </div>
   </div>
   <div class="ml-auto mb-auto w-36 items-end flex flex-col">
-    {#if isSaved}
+    {#if isSaved || book.assigned_shelf}
       <div class={`!bg-amber-800 ${primaryActionButton}`}>Read</div>
     {:else}
       <button
