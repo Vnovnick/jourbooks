@@ -3,35 +3,59 @@
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
   import RatingsInput from "./RatingsInput.svelte";
+  import { ShelfOptions } from "$lib/typesAndInterfaces";
 
   let isSaveOptionsOpen = false;
   let ratingsInputShown = false;
 
   // temp saved state to test
-  let isSaved = false;
+  let tempSave = false;
   let bookRating = 0;
+  let savedShelf: ShelfOptions;
   export let book: any;
   export let userId: string;
-  const markBookAsRead = async (rating: number) => {
+  const shelveBook = async (rating: number | null, shelfType: ShelfOptions) => {
     const res = await axios.post(
-      `${expressServerURL}/v1/book/shelve_read/${userId}`,
+      `${expressServerURL}/v1/book/shelve/${userId}`,
       {
         title: book.title,
         publicationYear: book.first_publish_year ?? "",
         pageCount: book.number_of_pages_median ?? "",
         author: !!book.author_name?.length ? book.author_name[0] : "",
         rating,
+        shelfType,
         olid: book.key.slice(7),
       }
     );
     console.log(res.data);
 
     if (res.status === 201) {
-      isSaved = true;
+      tempSave = true;
+      savedShelf = shelfType;
       ratingsInputShown = false;
       isSaveOptionsOpen = false;
     }
   };
+
+  const shelfOptionConfig = [
+    {
+      text: "Read",
+      value: ShelfOptions.READ,
+      clickFunc: () => {
+        ratingsInputShown = true;
+      },
+    },
+    {
+      text: "Currently Reading",
+      value: ShelfOptions.CURRENTLY_READING,
+      clickFunc: () => shelveBook(null, ShelfOptions.CURRENTLY_READING),
+    },
+    {
+      text: "Want to Read",
+      value: ShelfOptions.WANT_TO_READ,
+      clickFunc: () => shelveBook(null, ShelfOptions.WANT_TO_READ),
+    },
+  ];
 </script>
 
 <div class="flex gap-x-4 items-center border-b border-black/50 pb-2">
@@ -68,9 +92,11 @@
       {/if}
     </div>
   </div>
-  <div class="ml-auto mb-auto w-36 items-end flex flex-col">
-    {#if isSaved || book.assigned_shelf}
-      <div class={`!bg-amber-800 ${primaryActionButton}`}>Read</div>
+  <div class="ml-auto mb-auto w-44 items-end flex flex-col">
+    {#if tempSave || book.assigned_shelf}
+      <div class={`!bg-amber-800 ${primaryActionButton}`}>
+        {tempSave ? savedShelf : book.assigned_shelf}
+      </div>
     {:else}
       <button
         type="button"
@@ -83,18 +109,18 @@
     {/if}
     {#if isSaveOptionsOpen}
       <div
-        class="flex flex-col border-black border bg-green-100/40 rounded-lg w-full mt-2 h-20"
+        class="flex flex-col border-black border bg-green-100/40 rounded-lg w-full mt-2 py-2 min-h-[114px]"
       >
         {#if ratingsInputShown}
-          <RatingsInput bind:bookRating {markBookAsRead} />
+          <RatingsInput bind:bookRating {shelveBook} />
         {:else}
-          <button
-            type="button"
-            class="m-auto border-black hover:bg-black hover:text-white rounded-lg px-3 py-1"
-            on:click={() => {
-              ratingsInputShown = true;
-            }}>Mark as Read</button
-          >
+          {#each shelfOptionConfig as shelfOption}
+            <button
+              type="button"
+              class="m-auto border-black hover:bg-black hover:text-white rounded-lg px-3 py-1"
+              on:click={shelfOption.clickFunc}>{shelfOption.text}</button
+            >
+          {/each}
         {/if}
       </div>
     {/if}

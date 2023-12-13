@@ -1,6 +1,11 @@
 <script lang="ts">
+  import { ShelfOptions } from "$lib/typesAndInterfaces";
+
   export let bookRating: number;
-  export let markBookAsRead: (rating: number) => void;
+  export let shelveBook: (
+    rating: number | null,
+    shelfType: ShelfOptions
+  ) => void;
   console.log([...Array(6).keys()].slice(1));
 </script>
 
@@ -9,7 +14,7 @@
     <button
       class="w-5 h-5 rounded-md border border-black group flex"
       on:click={() => {
-        markBookAsRead(num);
+        shelveBook(num, ShelfOptions.READ);
       }}
     >
       <div

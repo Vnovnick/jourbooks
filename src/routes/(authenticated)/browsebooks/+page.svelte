@@ -30,21 +30,22 @@
       console.log(res.data);
 
       if (res.status === 200) {
-        const readBooksRes = await axios.get(
+        const shelvedBooks = await axios.get(
           `${expressServerURL}/v1/book/read/${data.userData.id}`
         );
 
-        if (readBooksRes.status !== 200) {
-          console.log("Error retrieving books:", readBooksRes.data);
+        if (shelvedBooks.status !== 200) {
+          console.log("Error retrieving books:", shelvedBooks.data);
         }
-        console.log(readBooksRes.data);
+        console.log(shelvedBooks.data);
 
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
-          if (
-            readBooksRes.data.some((book: ReadBooks) => book.olid === docOlid)
-          ) {
-            doc["assigned_shelf"] = "read";
+          const matchingBook = shelvedBooks.data.find(
+            (book: ReadBooks) => book.olid === docOlid
+          );
+          if (matchingBook) {
+            doc["assigned_shelf"] = matchingBook.shelf_type;
           }
           return doc;
         });

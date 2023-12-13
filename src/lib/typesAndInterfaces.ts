@@ -7,3 +7,9 @@ export interface ReadBooks {
   page_count: number;
   rating: number;
 }
+
+export enum ShelfOptions {
+  READ = "READ",
+  WANT_TO_READ = "WANT_TO_READ",
+  CURRENTLY_READING = "CURRENTLY_READING",
+}
