@@ -4,6 +4,10 @@
   import axios from "axios";
   import RatingsInput from "./RatingsInput.svelte";
   import { ShelfOptions } from "$lib/typesAndInterfaces";
+  import {
+    formatShelfOptionButton,
+    formatShelfOptionsEnumString,
+  } from "$lib/formattingFunctions";
 
   let isSaveOptionsOpen = false;
   let ratingsInputShown = false;
@@ -15,6 +19,8 @@
   export let book: any;
   export let userId: string;
   const shelveBook = async (rating: number | null, shelfType: ShelfOptions) => {
+    // TODO add a patch to same endpoint in order to update book relationship
+    // TODO (additional reminder) handle duplicates in the backend
     const res = await axios.post(
       `${expressServerURL}/v1/book/shelve/${userId}`,
       {
@@ -94,17 +100,28 @@
   </div>
   <div class="ml-auto mb-auto w-44 items-end flex flex-col">
     {#if tempSave || book.assigned_shelf}
-      <div class={`!bg-amber-800 ${primaryActionButton}`}>
-        {tempSave ? savedShelf : book.assigned_shelf}
-      </div>
-    {:else}
       <button
         type="button"
-        class={`w-16 ${primaryActionButton}`}
+        class={`${formatShelfOptionButton(
+          tempSave ? savedShelf : book.assigned_shelf
+        )} ${primaryActionButton}`}
         on:click={() => {
           isSaveOptionsOpen = !isSaveOptionsOpen;
           ratingsInputShown = false;
-        }}>{isSaveOptionsOpen ? "Cancel" : "Save"}</button
+        }}
+      >
+        {formatShelfOptionsEnumString(
+          tempSave ? savedShelf : book.assigned_shelf
+        )}
+      </button>
+    {:else}
+      <button
+        type="button"
+        class={`w-28 ${primaryActionButton}`}
+        on:click={() => {
+          isSaveOptionsOpen = !isSaveOptionsOpen;
+          ratingsInputShown = false;
+        }}>{isSaveOptionsOpen ? "Cancel" : "Add to shelf"}</button
       >
     {/if}
     {#if isSaveOptionsOpen}
