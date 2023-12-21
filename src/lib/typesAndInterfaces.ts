@@ -1,11 +1,13 @@
-export interface ReadBooks {
+export interface Book {
   id: string;
   title: string;
   author: string;
   publication_year: number;
   olid: string;
   page_count: number;
-  rating: number;
+  rating?: number;
+  shelf_type: ShelfOptions;
+  cover_key: string;
 }
 
 export enum ShelfOptions {

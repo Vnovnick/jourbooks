@@ -31,6 +31,7 @@
         rating,
         shelfType,
         olid: book.key.slice(7),
+        coverKey: book.cover_edition_key,
       }
     );
     console.log(res.data);

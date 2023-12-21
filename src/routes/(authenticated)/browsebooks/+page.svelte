@@ -4,7 +4,7 @@
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
-  import type { ReadBooks } from "$lib/typesAndInterfaces";
+  import type { Book } from "$lib/typesAndInterfaces";
 
   let bookSearch: string;
   let searchResponse: any[] = [];
@@ -32,7 +32,7 @@
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
           const matchingBook = data.bookData.find(
-            (book: ReadBooks) => book.olid === docOlid
+            (book: Book) => book.olid === docOlid
           );
           if (matchingBook) {
             doc["assigned_shelf"] = matchingBook.shelf_type;
