@@ -15,17 +15,11 @@ export const load = async ({ cookies }) => {
       return fail(500, { error: "Error retrieving user" });
     });
 
-  return { userData: userRes.data };
-};
+  const shelvedBooks = await axios.get(
+    `${expressServerURL}/v1/book/read/${userSessionCookie}`
+  );
 
-export const actions = {
-  search: async ({ request }) => {
-    const formData = await request.formData();
-    const search = formData.get("book-search") as string;
-    console.log(search);
-  },
-  logout: async ({ cookies }) => {
-    cookies.delete("session_id");
-    if (!cookies.get("session_id")) throw redirect(303, "/");
-  },
+  console.log(shelvedBooks.data);
+
+  return { userData: userRes.data, bookData: shelvedBooks.data };
 };

@@ -5,7 +5,6 @@
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
   import type { ReadBooks } from "$lib/typesAndInterfaces";
-  import { expressServerURL } from "$lib/endpointAssets";
 
   let bookSearch: string;
   let searchResponse: any[] = [];
@@ -30,18 +29,9 @@
       console.log(res.data);
 
       if (res.status === 200) {
-        const shelvedBooks = await axios.get(
-          `${expressServerURL}/v1/book/read/${data.userData.id}`
-        );
-
-        if (shelvedBooks.status !== 200) {
-          console.log("Error retrieving books:", shelvedBooks.data);
-        }
-        console.log(shelvedBooks.data);
-
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
-          const matchingBook = shelvedBooks.data.find(
+          const matchingBook = data.bookData.find(
             (book: ReadBooks) => book.olid === docOlid
           );
           if (matchingBook) {
@@ -58,14 +48,7 @@
   };
 </script>
 
-<div class="m-auto w-[1024px] bg-green-50 flex flex-col overflow-auto">
-  <nav class="mx-auto flex w-4/5 gap-x-10">
-    <a href="/home">Home</a>
-    <a href="/browsebooks">Browse Books</a>
-    <form action="?/logout" method="post">
-      <button type="submit">Logout</button>
-    </form>
-  </nav>
+<div class="bg-green-50 flex flex-col overflow-auto">
   <p class="text-5xl text-center mt-10">Browse Books</p>
   <form
     class="flex gap-x-2 mt-10 mb-5 justify-center"
