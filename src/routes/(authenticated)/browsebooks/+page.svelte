@@ -5,6 +5,7 @@
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
   import type { Book } from "$lib/typesAndInterfaces";
+  import { expressServerURL } from "$lib/endpointAssets";
 
   let bookSearch: string;
   let searchResponse: any[] = [];
@@ -29,9 +30,12 @@
       console.log(res.data);
 
       if (res.status === 200) {
+        const shelvedBooks = await axios.get(
+          `${expressServerURL}/v1/book/read/${data.userData.id}`
+        );
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
-          const matchingBook = data.bookData.find(
+          const matchingBook = shelvedBooks.data.find(
             (book: Book) => book.olid === docOlid
           );
           if (matchingBook) {

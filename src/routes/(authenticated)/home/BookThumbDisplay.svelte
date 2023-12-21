@@ -4,7 +4,7 @@
   export let books: Book[];
 </script>
 
-<div class="flex overflow-auto max-w-[900px] mx-auto gap-x-5 h-[230px] mt-5">
+<div class="flex overflow-auto max-w-[900px] mx-auto gap-x-5 mt-5 pb-5">
   {#each books as book}
     <div class="flex flex-col items-center text-center">
       {#if book.cover_key}
