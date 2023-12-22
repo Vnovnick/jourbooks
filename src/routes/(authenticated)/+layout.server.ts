@@ -15,11 +15,5 @@ export const load = async ({ cookies }) => {
       return fail(500, { error: "Error retrieving user" });
     });
 
-  const shelvedBooks = await axios.get(
-    `${expressServerURL}/v1/book/read/${userSessionCookie}`
-  );
-
-  console.log(shelvedBooks.data);
-
-  return { userData: userRes.data, bookData: shelvedBooks.data };
+  return userRes.data;
 };

@@ -31,7 +31,7 @@
 
       if (res.status === 200) {
         const shelvedBooks = await axios.get(
-          `${expressServerURL}/v1/book/read/${data.userData.id}`
+          `${expressServerURL}/v1/book/read/${data.id}`
         );
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
@@ -83,7 +83,7 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <BookSearchEntry {book} userId={data.userData.id} />
+        <BookSearchEntry {book} userId={data.id} />
       {/each}
     </div>
   {/if}
