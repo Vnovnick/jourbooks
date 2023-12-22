@@ -4,7 +4,9 @@ A site to shelve books, keep track of reading progress, chat with other readers,
 
 ## Currently In-Progress Features
 
-- Shelving and Favoriting Books
+- Shelving and Favoriting Books (1st iteration 12/12)
+- Profile Page
+- Individual Book Display
 
 ## Completed Features
 
@@ -16,3 +18,4 @@ A site to shelve books, keep track of reading progress, chat with other readers,
   - ~~checks read books with search results to display shelved/saved books from DB~~
 - (12/12) improved previous feature of shelving to "read" to instead allow user to shelve to multiple shelf types
   - same check made when searching for books, but now for whatever shelf type assigned
+- (12/21) Incorporate Tanstack Svelte Query and have updating book displays on the homepage
