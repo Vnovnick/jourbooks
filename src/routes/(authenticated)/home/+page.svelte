@@ -11,7 +11,7 @@
     queryKey: ["selfShelvedBooks"],
     queryFn: () =>
       axios
-        .get(`${expressServerURL}/v1/book/read/${data.id}`)
+        .get(`${expressServerURL}/v1/book/shelved/all/${data.id}`)
         .then((res) => res.data),
   });
 

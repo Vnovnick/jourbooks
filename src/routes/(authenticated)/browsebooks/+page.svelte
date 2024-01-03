@@ -31,7 +31,7 @@
 
       if (res.status === 200) {
         const shelvedBooks = await axios.get(
-          `${expressServerURL}/v1/book/read/${data.id}`
+          `${expressServerURL}/v1/book/shelved/all/${data.id}`
         );
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);

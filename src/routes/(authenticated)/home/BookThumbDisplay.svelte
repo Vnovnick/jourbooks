@@ -6,7 +6,7 @@
 
 <div class="flex overflow-auto max-w-[900px] mx-auto gap-x-5 mt-5 pb-5">
   {#each books as book}
-    <div class="flex flex-col items-center text-center">
+    <a href={`/home/${book.id}`} class="flex flex-col items-center text-center">
       {#if book.cover_key}
         <img
           loading="lazy"
@@ -23,6 +23,6 @@
       {/if}
       <p class="w-44 truncate">{book.title}</p>
       <p class="w-44 truncate">{book.author}</p>
-    </div>
+    </a>
   {/each}
 </div>
