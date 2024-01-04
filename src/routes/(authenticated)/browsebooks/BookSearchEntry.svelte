@@ -67,12 +67,14 @@
 
 <div class="flex gap-x-4 items-center border-b border-black/50 pb-2">
   {#if book.cover_edition_key}
-    <img
-      loading="lazy"
-      src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`}
-      alt={`Cover for ${book.title}`}
-      class="h-[230px] w-44 object-scale-down"
-    />
+    <a href={`/browsebooks/${book.key.slice(7)}`}>
+      <img
+        loading="lazy"
+        src={`https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`}
+        alt={`Cover for ${book.title}`}
+        class="h-[230px] w-44 object-scale-down"
+      />
+    </a>
   {:else}
     <div
       class="h-[230px] w-[176px] text-center flex border border-dashed border-black"

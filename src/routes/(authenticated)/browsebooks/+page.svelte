@@ -23,6 +23,12 @@
       .filter((s) => !!s.length)
       .join("+");
 
+    // TODO needs looking into - goal is to have query accessible and part of route so that the page can then be re-loaded with the search
+    // const searchParams = new URLSearchParams(window.location.search);
+    // searchParams.set("q", convertedSearch);
+    // const newpath = window.location.pathname + "?" + searchParams.toString();
+    // history.pushState(null, "", newpath);
+
     if (convertedSearch.length > 0) {
       const res = await axios.get(
         `https://openlibrary.org/search.json?q=${convertedSearch}`
