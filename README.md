@@ -19,3 +19,5 @@ A site to shelve books, keep track of reading progress, chat with other readers,
 - (12/12) improved previous feature of shelving to "read" to instead allow user to shelve to multiple shelf types
   - same check made when searching for books, but now for whatever shelf type assigned
 - (12/21) Incorporate Tanstack Svelte Query and have updating book displays on the homepage
+- (1/4) Adding query parameters to browsebooks url
+  - viewing a book from the search and then navigating back to the search page will re-run the search
