@@ -5,7 +5,7 @@
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
   export let data;
 
-  const openLibraryBookQuery = createQuery<Book>({
+  const openLibraryBookQuery = createQuery({
     queryKey: ["openLibraryBook"],
     queryFn: () =>
       axios
@@ -16,7 +16,7 @@
   $: bookData = $openLibraryBookQuery.isSuccess
     ? $openLibraryBookQuery.data
     : undefined;
-  console.log("olbook", $openLibraryBookQuery.data);
+  $: console.log("olbook", $openLibraryBookQuery.data);
 </script>
 
 <div class="w-full flex flex-col">
@@ -34,9 +34,10 @@
       /> -->
       <div class="mt-5 mx-5">
         <p class="text-3xl font-bold">{bookData?.title}</p>
-        <!-- <p class="text-2xl">{bookData?.author}</p>
-        <p>{bookData?.page_count}</p>
+        <!-- <p class="text-2xl">{bookData?.author}</p> -->
+        <!-- <p>{bookData?.page_count}</p>
         <p>{bookData?.publication_year}</p> -->
+        <!-- <p>{bookData?.description}</p> -->
       </div>
     </div>
   {/if}
