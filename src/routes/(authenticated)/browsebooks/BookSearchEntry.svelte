@@ -84,7 +84,9 @@
   {/if}
   <div class="flex flex-col justify-between h-[230px]">
     <div>
-      <p>{book.title}</p>
+      <a href={`/browsebooks/${book.key.slice(7)}`} class="hover:underline"
+        >{book.title}</a
+      >
       {#if !!book.author_name?.length}
         <p class="truncate w-60">{book.author_name[0]}</p>
       {/if}
