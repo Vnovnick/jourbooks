@@ -86,7 +86,9 @@
       {placeholder}
       bind:value={bookSearch}
     />
-    <button type="submit" class={primaryActionButton}>Search</button>
+    <button type="submit" class={primaryActionButton} disabled={!bookSearch}
+      >Search</button
+    >
   </form>
   <div
     class={`flex gap-x-4 mx-auto items-center ${
