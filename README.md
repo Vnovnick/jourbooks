@@ -23,3 +23,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (12/21) Incorporate Tanstack Svelte Query and have updating book displays on the homepage
 - (1/4) Adding query parameters to browsebooks url
   - viewing a book from the search and then navigating back to the search page will re-run the search
+- (1/11) Created the book journal entry feature for the frontend along with the backend endpoints in the backend
