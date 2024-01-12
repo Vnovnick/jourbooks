@@ -9,6 +9,7 @@
   export let data;
   let entryTitle: string;
   let entryContent: string;
+  let showNewEntryForm = false;
 
   const bookPostsQuery = createQuery({
     queryKey: ["specificBookPosts"],
@@ -30,6 +31,8 @@
       console.log("mutation success");
       entryTitle = "";
       entryContent = "";
+      $bookPostsQuery.refetch();
+      showNewEntryForm = false;
     },
   });
 
@@ -94,27 +97,36 @@
       </div>
     </div>
     <div>
-      <p>Journal Entries</p>
-      <form class="flex flex-col mb-5" on:submit={handleSubmit}>
-        <label for="entry-title">Title</label>
-        <input
-          bind:value={entryTitle}
-          id="entry-title"
-          name="title"
-          class="border border-black"
-          placeholder="Somthing Clever"
-          required
-        />
-        <!-- <label for="entry-content">Your Thoughts</label> -->
-        <textarea
-          bind:value={entryContent}
-          name="entry-content"
-          class="border border-black h-56 mt-3"
-          placeholder="Your Thoughts..."
-          required
-        />
-        <button class="bg-black py-2 px-4 w-fit text-white mt-3">Save</button>
-      </form>
+      <div>
+        <p class="font-semibold text-xl mt-5">Jour Entries</p>
+        <button
+          on:click={() => {
+            showNewEntryForm = !showNewEntryForm;
+          }}
+          >{showNewEntryForm ? "Cancel" : "Create a New Journal Entry"}</button
+        >
+      </div>
+      {#if showNewEntryForm}
+        <form class="flex flex-col mb-5" on:submit={handleSubmit}>
+          <label for="entry-title">Title</label>
+          <input
+            bind:value={entryTitle}
+            id="entry-title"
+            name="title"
+            class="border border-black"
+            placeholder="Somthing Clever"
+            required
+          />
+          <textarea
+            bind:value={entryContent}
+            name="entry-content"
+            class="border border-black h-56 mt-3"
+            placeholder="Your Thoughts..."
+            required
+          />
+          <button class="bg-black py-2 px-4 w-fit text-white mt-3">Save</button>
+        </form>
+      {/if}
       {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
         {#each postsData as post}
           <div class="py-6 border-t border-black">

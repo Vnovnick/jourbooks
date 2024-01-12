@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Book } from "$lib/typesAndInterfaces";
   import { createQuery } from "@tanstack/svelte-query";
   import axios from "axios";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
