@@ -28,7 +28,6 @@
         postData
       ),
     onSuccess: () => {
-      console.log("mutation success");
       entryTitle = "";
       entryContent = "";
       $bookPostsQuery.refetch();
@@ -66,8 +65,6 @@
 
     $createBookJournalEntry.mutate(body);
   };
-
-  console.log($bookPostsQuery.data);
 </script>
 
 <div class="w-full flex flex-col px-5">
