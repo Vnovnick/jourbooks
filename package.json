@@ -25,6 +25,7 @@
 	"dependencies": {
 		"@tanstack/svelte-query": "^5.14.2",
 		"axios": "^1.5.1",
+		"dayjs": "^1.11.10",
 		"svelte-loading-spinners": "^0.3.4"
 	}
 }
