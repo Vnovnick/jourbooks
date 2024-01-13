@@ -15,3 +15,11 @@ export enum ShelfOptions {
   WANT_TO_READ = "WANT_TO_READ",
   CURRENTLY_READING = "CURRENTLY_READING",
 }
+
+export interface JournalEntry {
+  created_at: string | number;
+  edited_at: string | number;
+  id: string;
+  title: string;
+  text: string;
+}

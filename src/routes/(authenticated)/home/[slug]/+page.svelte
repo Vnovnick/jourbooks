@@ -2,14 +2,22 @@
   import { expressServerURL } from "$lib/endpointAssets";
   import type { Book } from "$lib/typesAndInterfaces";
   import CircleRatings from "$lib/uiComponents/CircleRatings.svelte";
+  import {
+    formatShelfOptionsEnumString,
+    formatShelfOptionButton,
+  } from "$lib/formattingFunctions";
+  import { primaryActionButton } from "$lib/standardStyles";
+  import { SubNavTab, setSubNavTabStyling } from "./BookViewDefinitions";
   import { createMutation, createQuery } from "@tanstack/svelte-query";
+  import JournalEntryForm from "./JournalEntryForm.svelte";
   import axios from "axios";
-  import dayjs from "dayjs";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
+  import JournalEntry from "./JournalEntry.svelte";
   export let data;
-  let entryTitle: string;
-  let entryContent: string;
+  let entryTitle = "";
+  let entryContent = "";
   let showNewEntryForm = false;
+  let subNav = SubNavTab.JOURNAL;
 
   const bookPostsQuery = createQuery({
     queryKey: ["specificBookPosts"],
@@ -83,19 +91,39 @@
       <div class="mt-5 mx-5">
         <p class="text-3xl font-bold">{bookData?.title}</p>
         <p class="text-2xl">{bookData?.author}</p>
-        <p>{bookData?.page_count}</p>
-        <p>{bookData?.publication_year}</p>
-        {#if bookData?.rating}
+        <p>{bookData.page_count}</p>
+        <p>{bookData.publication_year}</p>
+        {#if bookData.rating}
           <div class="flex items-center gap-x-3">
             <p>Your Rating:</p>
             <CircleRatings rating={bookData.rating} />
           </div>
         {/if}
+        <p
+          class={`${primaryActionButton} w-fit ${formatShelfOptionButton(
+            bookData.shelf_type
+          )}`}
+        >
+          {formatShelfOptionsEnumString(bookData.shelf_type)}
+        </p>
       </div>
     </div>
     <div>
+      <div class="flex mt-5 border-b border-black">
+        <button
+          class={setSubNavTabStyling(subNav, SubNavTab.JOURNAL)}
+          on:click={() => {
+            subNav = SubNavTab.JOURNAL;
+          }}>Journal Entries</button
+        >
+        <button
+          class={setSubNavTabStyling(subNav, SubNavTab.REVIEW)}
+          on:click={() => {
+            subNav = SubNavTab.REVIEW;
+          }}>Your Review</button
+        >
+      </div>
       <div>
-        <p class="font-semibold text-xl mt-5">Jour Entries</p>
         <button
           on:click={() => {
             showNewEntryForm = !showNewEntryForm;
@@ -104,33 +132,11 @@
         >
       </div>
       {#if showNewEntryForm}
-        <form class="flex flex-col mb-5" on:submit={handleSubmit}>
-          <label for="entry-title">Title</label>
-          <input
-            bind:value={entryTitle}
-            id="entry-title"
-            name="title"
-            class="border border-black"
-            placeholder="Somthing Clever"
-            required
-          />
-          <textarea
-            bind:value={entryContent}
-            name="entry-content"
-            class="border border-black h-56 mt-3"
-            placeholder="Your Thoughts..."
-            required
-          />
-          <button class="bg-black py-2 px-4 w-fit text-white mt-3">Save</button>
-        </form>
+        <JournalEntryForm {handleSubmit} bind:entryContent bind:entryTitle />
       {/if}
       {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
         {#each postsData as post}
-          <div class="py-6 border-t border-black">
-            <p>{post.title}</p>
-            <p>{post.text}</p>
-            <em>{dayjs(Number(post.createdat)).format("h:mm a MM/DD/YYYY")}</em>
-          </div>
+          <JournalEntry {post} slug={data.slug} userId={data.userData.id} />
         {/each}
       {/if}
     </div>
