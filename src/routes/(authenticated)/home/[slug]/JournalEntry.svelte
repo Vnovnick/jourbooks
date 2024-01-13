@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { JournalEntry } from "$lib/typesAndInterfaces";
   import { expressServerURL } from "$lib/endpointAssets";
-  import { createMutation } from "@tanstack/svelte-query";
+  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
   import dayjs from "dayjs";
@@ -13,17 +13,26 @@
   export let userId: string;
   export let slug: string;
 
+  let isDeleteLoading = false;
   let showModal = false;
+  const queryClient = useQueryClient();
 
-  const createBookJournalEntry = createMutation({
-    mutationFn: (id: string) =>
-      axios.delete(
-        `${expressServerURL}/v1/book/shelved/post/${slug}:${userId}`,
-        { data: id }
-      ),
-    // onSuccess: () => {
-    //   $bookPostsQuery.refetch();
-    // },
+  const deleteJournalEntry = createMutation({
+    mutationFn: (postId: string) => {
+      isDeleteLoading = true;
+      return axios.delete(
+        `${expressServerURL}/v1/book/shelved/book_posts/${slug}:${userId}:${postId}`
+      );
+    },
+    onSuccess: () => {
+      showModal = false;
+    },
+    onError: () => {
+      isDeleteLoading = false;
+      console.log("Error deleting post");
+    },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
   });
 </script>
 
@@ -55,6 +64,16 @@
     Are you sure you want to delete this Journal Entry?
   </p>
   <div class="flex text-xl gap-x-5 my-4">
-    <button class={primaryActionButton}>Yes, delete this post.</button>
+    {#if !isDeleteLoading}
+      <button
+        class={primaryActionButton}
+        on:click={() => {
+          $deleteJournalEntry.mutate(post.id);
+        }}>Yes, delete this post.</button
+      >
+    {/if}
+    {#if isDeleteLoading}
+      <p>Loading...</p>
+    {/if}
   </div>
 </Modal>
