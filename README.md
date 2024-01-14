@@ -6,9 +6,8 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 
 ## Currently In-Progress Features
 
-- Shelving and Favoriting Books (1st iteration 12/12)
 - Profile Page
-- Individual Book Display
+- Adding/Editing/Patching/Deleting Reviews
 
 ## Completed Features
 
@@ -24,3 +23,5 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (1/4) Adding query parameters to browsebooks url
   - viewing a book from the search and then navigating back to the search page will re-run the search
 - (1/11) Created the book journal entry feature for the frontend along with the backend endpoints in the backend
+- (1/13) Added the ability to delete and update journal entries in the frontend and the backend
+  - Incorporated a modal component to confirm deletion for entries

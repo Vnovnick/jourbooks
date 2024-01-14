@@ -8,7 +8,11 @@
   } from "$lib/formattingFunctions";
   import { primaryActionButton } from "$lib/standardStyles";
   import { SubNavTab, setSubNavTabStyling } from "./BookViewDefinitions";
-  import { createMutation, createQuery } from "@tanstack/svelte-query";
+  import {
+    createMutation,
+    createQuery,
+    useQueryClient,
+  } from "@tanstack/svelte-query";
   import JournalEntryForm from "./JournalEntryForm.svelte";
   import axios from "axios";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
@@ -19,12 +23,14 @@
   let showNewEntryForm = false;
   let subNav = SubNavTab.JOURNAL;
 
+  const queryClient = useQueryClient();
+
   const bookPostsQuery = createQuery({
     queryKey: ["specificBookPosts"],
     queryFn: () =>
       axios
         .get(
-          `${expressServerURL}/v1/book/shelved/book_posts/${data.slug}:${data.userData.id}`
+          `${expressServerURL}/v1/book/shelved/journal/${data.slug}:${data.userData.id}`
         )
         .then((res) => res.data),
   });
@@ -32,15 +38,16 @@
   const createBookJournalEntry = createMutation({
     mutationFn: (postData: { title: string; text: string; userId: string }) =>
       axios.post(
-        `${expressServerURL}/v1/book/shelved/post/${data.slug}`,
+        `${expressServerURL}/v1/book/shelved/journal/${data.slug}`,
         postData
       ),
     onSuccess: () => {
       entryTitle = "";
       entryContent = "";
-      $bookPostsQuery.refetch();
       showNewEntryForm = false;
     },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
   });
 
   const specificBookQuery = createQuery<Book>({
@@ -59,7 +66,9 @@
 
   // createdat values coming back from the backend as strings???
   $: postsData = $bookPostsQuery.isSuccess
-    ? $bookPostsQuery.data.sort((a: any, b: any) => b.createdat - a.createdat)
+    ? $bookPostsQuery.data.sort(
+        (a: any, b: any) => Number(b.created_at) - Number(a.created_at)
+      )
     : [];
 
   const handleSubmit = (e: SubmitEvent) => {
@@ -125,6 +134,7 @@
       </div>
       <div>
         <button
+          class={`${primaryActionButton} my-3`}
           on:click={() => {
             showNewEntryForm = !showNewEntryForm;
           }}
