@@ -1,11 +1,6 @@
 <script lang="ts">
   import { expressServerURL } from "$lib/endpointAssets";
   import type { Book } from "$lib/typesAndInterfaces";
-  import CircleRatings from "$lib/uiComponents/CircleRatings.svelte";
-  import {
-    formatShelfOptionsEnumString,
-    formatShelfOptionButton,
-  } from "$lib/formattingFunctions";
   import { primaryActionButton } from "$lib/standardStyles";
   import { SubNavTab, setSubNavTabStyling } from "./BookViewDefinitions";
   import {
@@ -17,10 +12,15 @@
   import axios from "axios";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
   import JournalEntry from "./JournalEntry.svelte";
+  import BookInfoDisplay from "./BookInfoDisplay.svelte";
+  import dayjs from "dayjs";
   export let data;
   let entryTitle = "";
   let entryContent = "";
+  let newReviewTitle = "";
+  let newReviewText = "";
   let showNewEntryForm = false;
+  let showWriteReviewFrom = false;
   let subNav = SubNavTab.JOURNAL;
 
   const queryClient = useQueryClient();
@@ -49,6 +49,22 @@
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
   });
+
+  // TODO finish mutation and create a new Review form
+  // const createBookReview = createMutation({
+  //   mutationFn: (postData: { title: string; text: string; userId: string }) =>
+  //     axios.post(
+  //       `${expressServerURL}/v1/book/shelved/review/${data.slug}`,
+  //       postData
+  //     ),
+  //   onSuccess: () => {
+  //     newReviewTitle = "";
+  //     newReviewText = "";
+  //     showWriteReviewFrom = false;
+  //   },
+  //   onSettled: () =>
+  //     queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
+  // });
 
   const specificBookQuery = createQuery<Book>({
     queryKey: ["specificBook"],
@@ -91,32 +107,7 @@
     </div>
   {/if}
   {#if $specificBookQuery.isSuccess && !$specificBookQuery.isLoading && bookData}
-    <div class="flex mt-5">
-      <img
-        src={`https://covers.openlibrary.org/b/olid/${bookData?.cover_key}-L.jpg`}
-        alt={`Cover for ${bookData.title}`}
-        class="w-60 object-scale-down"
-      />
-      <div class="mt-5 mx-5">
-        <p class="text-3xl font-bold">{bookData?.title}</p>
-        <p class="text-2xl">{bookData?.author}</p>
-        <p>{bookData.page_count}</p>
-        <p>{bookData.publication_year}</p>
-        {#if bookData.rating}
-          <div class="flex items-center gap-x-3">
-            <p>Your Rating:</p>
-            <CircleRatings rating={bookData.rating} />
-          </div>
-        {/if}
-        <p
-          class={`${primaryActionButton} w-fit ${formatShelfOptionButton(
-            bookData.shelf_type
-          )}`}
-        >
-          {formatShelfOptionsEnumString(bookData.shelf_type)}
-        </p>
-      </div>
-    </div>
+    <BookInfoDisplay {bookData} />
     <div>
       <div class="flex mt-5 border-b border-black">
         <button
@@ -132,7 +123,7 @@
           }}>Your Review</button
         >
       </div>
-      <div>
+      {#if subNav === SubNavTab.JOURNAL}
         <button
           class={`${primaryActionButton} my-3`}
           on:click={() => {
@@ -140,14 +131,58 @@
           }}
           >{showNewEntryForm ? "Cancel" : "Create a New Journal Entry"}</button
         >
-      </div>
-      {#if showNewEntryForm}
-        <JournalEntryForm {handleSubmit} bind:entryContent bind:entryTitle />
+        {#if showNewEntryForm}
+          <JournalEntryForm {handleSubmit} bind:entryContent bind:entryTitle />
+        {/if}
+        {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
+          {#each postsData as post}
+            <JournalEntry {post} slug={data.slug} userId={data.userData.id} />
+          {/each}
+        {/if}
       {/if}
-      {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
-        {#each postsData as post}
-          <JournalEntry {post} slug={data.slug} userId={data.userData.id} />
-        {/each}
+      {#if subNav === SubNavTab.REVIEW}
+        {#if !bookData.review}
+          <button
+            class={`${primaryActionButton} my-3`}
+            on:click={() => {
+              showWriteReviewFrom = !showWriteReviewFrom;
+            }}>{showNewEntryForm ? "Cancel" : "Write a Review"}</button
+          >
+        {/if}
+        {#if bookData.review}
+          <div>
+            <p>{bookData.review.title}</p>
+            <p>{bookData.review.text}</p>
+            <div class="flex justify-between mt-2">
+              <div class="flex text-sm">
+                <em
+                  >created: {dayjs(Number(bookData.review.created_at)).format(
+                    "h:mm a MM/DD/YYYY"
+                  )}</em
+                >
+                {#if bookData.review.edited_at}
+                  <em
+                    >&nbsp; - last edited: {dayjs(
+                      Number(bookData.review.edited_at)
+                    ).format("h:mm a MM/DD/YYYY")}</em
+                  >
+                {/if}
+              </div>
+              <!-- <div class="flex gap-x-2">
+              <button type="button" on:click={() => (showModal = true)}
+                ><img src={trash} alt="delete" class="w-6 h-6" /></button
+              ><button
+                type="button"
+                on:click={() => {
+                  editText = post.text;
+                  editTitle = post.title;
+                  isEditing = true;
+                }}><img src={edit} alt="edit" class="w-6 h-6" /></button
+              >
+            </div> -->
+            </div>
+          </div>
+        {/if}
       {/if}
     </div>
   {/if}

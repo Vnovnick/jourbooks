@@ -8,6 +8,14 @@ export interface Book {
   rating?: number;
   shelf_type: ShelfOptions;
   cover_key: string;
+  review: Review;
+}
+
+export interface Review {
+  title: string;
+  text: string;
+  created_at: string;
+  edited_at: string;
 }
 
 export enum ShelfOptions {

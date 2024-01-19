@@ -5,8 +5,8 @@
   import { primaryActionButton } from "$lib/standardStyles";
   import axios from "axios";
   import dayjs from "dayjs";
-  import trash from "./trash.svg";
-  import edit from "./edit.svg";
+  import trash from "$lib/images/ctas/trash.svg";
+  import edit from "$lib/images/ctas/edit.svg";
   import Modal from "$lib/uiComponents/Modal.svelte";
 
   export let post: JournalEntry;
