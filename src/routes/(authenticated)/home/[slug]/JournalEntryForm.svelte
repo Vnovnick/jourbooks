@@ -21,5 +21,9 @@
     placeholder="Your Thoughts..."
     required
   />
-  <button class="bg-black py-2 px-4 w-fit text-white mt-3">Save</button>
+  <button
+    type="submit"
+    class="bg-black py-2 px-4 w-fit text-white mt-3 disabled:opacity-50"
+    disabled={!entryTitle || !entryContent}>Save</button
+  >
 </form>

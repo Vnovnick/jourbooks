@@ -13,6 +13,8 @@
   export let userId: string;
   export let slug: string;
 
+  let dialog: HTMLDialogElement;
+
   let isDeleteLoading = false;
   let isEditLoading = false;
   let showModal = false;
@@ -29,14 +31,18 @@
       );
     },
     onSuccess: () => {
+      isDeleteLoading = false;
       showModal = false;
+      dialog.close();
     },
     onError: () => {
       isDeleteLoading = false;
       console.log("Error deleting post");
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
+    onSettled: () => {
+      showModal = false;
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] });
+    },
   });
 
   const editJournalEntry = createMutation({
@@ -81,8 +87,9 @@
         <button
           class="bg-black py-2 px-4 w-fit text-white mt-3 disabled:opacity-50"
           on:click={() => $editJournalEntry.mutate(post.id)}
-          disabled={editText === post.text && editTitle === post.title}
-          >Save Edit</button
+          disabled={(editText === post.text && editTitle === post.title) ||
+            !editTitle ||
+            !editText}>Save Edit</button
         >
         <button
           class="bg-black py-2 px-4 w-fit text-white mt-3"
@@ -124,7 +131,7 @@
     </div>
   {/if}
 </div>
-<Modal bind:showModal closeText="Cancel">
+<Modal bind:dialog bind:showModal closeText="Cancel">
   <p class="text-2xl text-center">
     Are you sure you want to delete this Journal Entry?
   </p>

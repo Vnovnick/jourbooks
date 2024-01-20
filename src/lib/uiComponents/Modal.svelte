@@ -1,8 +1,7 @@
 <script lang="ts">
   // modal example take from here: https://svelte.dev/examples/modal
   export let showModal: boolean;
-
-  let dialog: HTMLDialogElement;
+  export let dialog: HTMLDialogElement;
   export let closeText = "Close";
 
   $: if (dialog && showModal) dialog.showModal();
