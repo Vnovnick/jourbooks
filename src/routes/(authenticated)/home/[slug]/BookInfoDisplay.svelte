@@ -18,8 +18,8 @@
   <div class="mt-5 mx-5">
     <p class="text-3xl font-bold">{bookData?.title}</p>
     <p class="text-2xl">{bookData?.author}</p>
-    <p>{bookData.page_count}</p>
-    <p>{bookData.publication_year}</p>
+    <p>Page Count: {bookData.page_count}</p>
+    <p>Published: {bookData.publication_year}</p>
     {#if bookData.rating}
       <div class="flex items-center gap-x-3">
         <p>Your Rating:</p>
