@@ -1,17 +1,14 @@
 <script lang="ts">
   import { expressServerURL } from "$lib/endpointAssets";
   import type { Book } from "$lib/typesAndInterfaces";
-  import {
-    SubNavTab,
-    setSubNavTabStyling,
-    tabsConfig,
-  } from "./BookViewDefinitions";
-  import { createQuery, useQueryClient } from "@tanstack/svelte-query";
+  import { SubNavTab } from "./BookViewDefinitions";
+  import { createQuery } from "@tanstack/svelte-query";
   import axios from "axios";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
   import BookInfoDisplay from "./BookInfoDisplay.svelte";
   import JournalEntryTab from "./JournalEntryTab.svelte";
   import ReviewEntryTab from "./ReviewEntryTab.svelte";
+  import SubNavTabs from "./SubNavTabs.svelte";
   export let data;
   let subNav = SubNavTab.JOURNAL;
 
@@ -39,16 +36,7 @@
   {#if $specificBookQuery.isSuccess && !$specificBookQuery.isLoading && bookData}
     <BookInfoDisplay {bookData} />
     <div>
-      <div class="flex mt-5 border-b border-black">
-        {#each tabsConfig as tab}
-          <button
-            class={setSubNavTabStyling(subNav, tab.val)}
-            on:click={() => {
-              subNav = tab.val;
-            }}>{tab.text}</button
-          >
-        {/each}
-      </div>
+      <SubNavTabs bind:subNav />
       {#if subNav === SubNavTab.JOURNAL}
         <JournalEntryTab bookId={data.slug} userId={data.userData.id} />
       {/if}
