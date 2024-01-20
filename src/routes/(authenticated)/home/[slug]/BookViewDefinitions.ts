@@ -13,3 +13,14 @@ export const setSubNavTabStyling = (
     tabVal === buttonVal ? "" : "border-transparent bg-transparent"
   } ${subNavigationTabs}`;
 };
+
+export const tabsConfig = [
+  {
+    val: SubNavTab.JOURNAL,
+    text: "Journal Entries",
+  },
+  {
+    val: SubNavTab.REVIEW,
+    text: "Your Review",
+  },
+];

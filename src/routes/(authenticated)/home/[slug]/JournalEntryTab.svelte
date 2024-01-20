@@ -2,13 +2,13 @@
   import JournalEntry from "./JournalEntry.svelte";
   import { primaryActionButton } from "$lib/standardStyles";
   import { expressServerURL } from "$lib/endpointAssets";
-  import JournalEntryForm from "./JournalEntryForm.svelte";
   import axios from "axios";
   import {
     createMutation,
     createQuery,
     useQueryClient,
   } from "@tanstack/svelte-query";
+  import EntryForm from "./EntryForm.svelte";
 
   export let bookId: string;
   export let userId: string;
@@ -68,7 +68,7 @@
   }}>{showNewEntryForm ? "Cancel" : "Create a New Journal Entry"}</button
 >
 {#if showNewEntryForm}
-  <JournalEntryForm {handleSubmit} bind:entryContent bind:entryTitle />
+  <EntryForm {handleSubmit} bind:entryContent bind:entryTitle />
 {/if}
 {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
   {#each postsData as post}
