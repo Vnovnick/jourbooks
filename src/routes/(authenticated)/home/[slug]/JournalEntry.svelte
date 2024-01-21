@@ -8,6 +8,7 @@
   import trash from "$lib/images/ctas/trash.svg";
   import edit from "$lib/images/ctas/edit.svg";
   import Modal from "$lib/uiComponents/Modal.svelte";
+  import EditEntryForm from "./EditEntryForm.svelte";
 
   export let post: JournalEntry;
   export let userId: string;
@@ -67,36 +68,14 @@
 
 <div class="py-6 border-t border-black">
   {#if isEditing}
-    <form class="flex flex-col mb-5">
-      <input
-        bind:value={editTitle}
-        id="edit-title"
-        name="title"
-        class="border border-black"
-        placeholder="A slightly different title..."
-        required
-      />
-      <textarea
-        bind:value={editText}
-        name="edit-content"
-        class="border border-black h-44 mt-3"
-        placeholder="Some Edited Thoughts..."
-        required
-      />
-      <div class="flex gap-x-3">
-        <button
-          class="bg-black py-2 px-4 w-fit text-white mt-3 disabled:opacity-50"
-          on:click={() => $editJournalEntry.mutate(post.id)}
-          disabled={(editText === post.text && editTitle === post.title) ||
-            !editTitle ||
-            !editText}>Save Edit</button
-        >
-        <button
-          class="bg-black py-2 px-4 w-fit text-white mt-3"
-          on:click={() => (isEditing = false)}>Cancel Edit</button
-        >
-      </div>
-    </form>
+    <EditEntryForm
+      bind:editText
+      bind:editTitle
+      bind:isEditing
+      originalText={post.text}
+      originalTitle={post.title}
+      onClickFunc={() => $editJournalEntry.mutate(post.id)}
+    />
   {/if}
   {#if !isEditing}
     <p>{post.title}</p>

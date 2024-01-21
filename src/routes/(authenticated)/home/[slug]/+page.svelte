@@ -35,18 +35,16 @@
   {/if}
   {#if $specificBookQuery.isSuccess && !$specificBookQuery.isLoading && bookData}
     <BookInfoDisplay {bookData} />
-    <div>
-      <SubNavTabs bind:subNav />
-      {#if subNav === SubNavTab.JOURNAL}
-        <JournalEntryTab bookId={data.slug} userId={data.userData.id} />
-      {/if}
-      {#if subNav === SubNavTab.REVIEW}
-        <ReviewEntryTab
-          reviewData={bookData.review}
-          bookId={data.slug}
-          userId={data.userData.id}
-        />
-      {/if}
-    </div>
+    <SubNavTabs bind:subNav />
+    {#if subNav === SubNavTab.JOURNAL}
+      <JournalEntryTab bookId={data.slug} userId={data.userData.id} />
+    {/if}
+    {#if subNav === SubNavTab.REVIEW}
+      <ReviewEntryTab
+        reviewData={bookData.review}
+        bookId={data.slug}
+        userId={data.userData.id}
+      />
+    {/if}
   {/if}
 </div>

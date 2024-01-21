@@ -62,7 +62,7 @@
 </script>
 
 <button
-  class={`${primaryActionButton} my-3`}
+  class={`${primaryActionButton} my-3 w-fit`}
   on:click={() => {
     showNewEntryForm = !showNewEntryForm;
   }}>{showNewEntryForm ? "Cancel" : "Create a New Journal Entry"}</button
