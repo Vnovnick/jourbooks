@@ -48,15 +48,12 @@
       )
     : [];
 
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     const body = {
       title: entryTitle,
       text: entryContent,
       userId,
     };
-
     $createBookJournalEntry.mutate(body);
   };
 </script>

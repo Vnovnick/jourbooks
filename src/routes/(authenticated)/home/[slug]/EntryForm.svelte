@@ -4,7 +4,7 @@
   export let entryContent: string;
 </script>
 
-<form class="flex flex-col mb-5" on:submit={handleSubmit}>
+<form class="flex flex-col mb-5" on:submit|preventDefault={handleSubmit}>
   <label for="entry-title">Title</label>
   <input
     bind:value={entryTitle}

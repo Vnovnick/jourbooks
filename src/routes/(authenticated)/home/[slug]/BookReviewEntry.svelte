@@ -11,6 +11,8 @@
   import Modal from "$lib/uiComponents/Modal.svelte";
 
   export let reviewData: Review;
+  export let userId: string;
+  export let slug: string;
 
   let dialog: HTMLDialogElement;
 
@@ -21,6 +23,26 @@
   let isEditLoading = false;
   let isDeleteLoading = false;
   const queryClient = useQueryClient();
+
+  const deleteReview = createMutation({
+    mutationFn: (reviewId: string) => {
+      isDeleteLoading = true;
+      return axios.delete(
+        `${expressServerURL}/v1/book/shelved/review/${slug}:${userId}:${reviewId}`
+      );
+    },
+    onSuccess: () => {
+      isDeleteLoading = false;
+      showModal = false;
+      dialog.close();
+    },
+    onError: () => {
+      isDeleteLoading = false;
+      console.log("Error deleting review");
+    },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
+  });
 
   const editReview = createMutation({
     mutationFn: (reviewId: string) => {
@@ -36,6 +58,10 @@
     onSuccess: () => {
       isEditLoading = false;
       isEditing = false;
+    },
+    onError: () => {
+      isEditLoading = false;
+      console.log("Error editing review");
     },
     onSettled: () =>
       queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
@@ -94,8 +120,9 @@
     {#if !isDeleteLoading}
       <button
         class={primaryActionButton}
-        on:click={() => console.log("delete me")}
-        >Yes, delete this review.</button
+        on:click={() => {
+          $deleteReview.mutate(reviewData.id);
+        }}>Yes, delete this review.</button
       >
     {/if}
     {#if isDeleteLoading}

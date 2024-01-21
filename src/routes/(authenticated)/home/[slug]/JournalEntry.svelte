@@ -40,10 +40,8 @@
       isDeleteLoading = false;
       console.log("Error deleting post");
     },
-    onSettled: () => {
-      showModal = false;
-      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] });
-    },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
   });
 
   const editJournalEntry = createMutation({
@@ -61,8 +59,14 @@
       isEditLoading = false;
       isEditing = false;
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
+    onError: () => {
+      isEditLoading = false;
+      console.log("Error deleting journal entry");
+    },
+    onSettled: () => {
+      showModal = false;
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] });
+    },
   });
 </script>
 

@@ -26,7 +26,7 @@
   <div class="flex gap-x-3">
     <button
       class="bg-black py-2 px-4 w-fit text-white mt-3 disabled:opacity-50"
-      on:click={onClickFunc}
+      on:click|preventDefault={onClickFunc}
       disabled={(editText === originalText && editTitle === originalTitle) ||
         !editTitle ||
         !editText}>Save Edit</button

@@ -32,22 +32,19 @@
       queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
   });
 
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     const body = {
       title: newReviewTitle,
       text: newReviewText,
       userId,
     };
-
     $createBookReview.mutate(body);
   };
 </script>
 
 {#if !reviewData}
   <button
-    class={`${primaryActionButton} my-3`}
+    class={`${primaryActionButton} my-3 w-fit`}
     on:click={() => {
       showWriteReviewForm = !showWriteReviewForm;
     }}>{showWriteReviewForm ? "Cancel" : "Write a Review"}</button
@@ -61,5 +58,5 @@
   />
 {/if}
 {#if reviewData}
-  <BookReviewEntry {reviewData} />
+  <BookReviewEntry {reviewData} slug={bookId} {userId} />
 {/if}
