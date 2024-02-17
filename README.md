@@ -8,7 +8,7 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 
 - Updating Shelved Book info from book view page
 
-### Backlogged Issues (set up as reminders for future enhancements)
+### Backlogged Issues (TODOs)
 
 [Enhancement/backlogged issues](https://github.com/Vnovnick/jourbooks/issues)
 
@@ -33,3 +33,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (1/13) Added the ability to delete and update journal entries in the frontend and the backend
   - Incorporated a modal component to confirm deletion for entries
 - (1/20) Finished adding functionality for the review tab and the corresponding requests for them in the backend
+- (2/17) Finished visuals for shelved book page and extracted queries to `+page.server.ts` file

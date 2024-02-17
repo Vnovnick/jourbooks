@@ -13,7 +13,6 @@
   let descHeight: number;
   $: if (descEl) {
     descHeight = descEl?.getBoundingClientRect().height;
-    console.log(descHeight);
   }
 </script>
 
