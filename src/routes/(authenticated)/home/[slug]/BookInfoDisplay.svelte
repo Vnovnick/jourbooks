@@ -8,6 +8,13 @@
   import CircleRatings from "$lib/uiComponents/CircleRatings.svelte";
   export let bookData: Book;
   export let olData: any;
+  let showFullDesc = false;
+  let descEl: HTMLParagraphElement;
+  let descHeight: number;
+  $: if (descEl) {
+    descHeight = descEl?.getBoundingClientRect().height;
+    console.log(descHeight);
+  }
 </script>
 
 <div class="flex mt-5">
@@ -39,12 +46,34 @@
     {/if}
     {#if olData}
       {#if olData.description}
-        <p class="border-t border-black mt-2 pt-2">
+        <p
+          id={`description-${bookData.olid}`}
+          bind:this={descEl}
+          class={`border-t border-black mt-2 pt-2 ${
+            descHeight > 153 && !showFullDesc ? "description" : ""
+          }`}
+        >
           {olData.description.value || olData.description}
         </p>
+        <button
+          class="text-green-700 w-fit hover:underline"
+          on:click={() => {
+            showFullDesc = !showFullDesc;
+          }}>{showFullDesc ? "Show Less" : "Show More"}</button
+        >
       {:else}
         <p>No Description Data available</p>
       {/if}
     {/if}
   </div>
 </div>
+
+<style>
+  .description {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
