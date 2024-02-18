@@ -9,11 +9,7 @@
   export let bookData: Book;
   export let olData: any;
   let showFullDesc = false;
-  let descEl: HTMLParagraphElement;
-  let descHeight: number;
-  $: if (descEl) {
-    descHeight = descEl?.getBoundingClientRect().height;
-  }
+  const bookDescription = olData.description;
 </script>
 
 <div class="flex mt-5">
@@ -44,22 +40,26 @@
       <p>Loading...</p>
     {/if}
     {#if olData}
-      {#if olData.description}
+      {#if bookDescription}
         <p
           id={`description-${bookData.olid}`}
-          bind:this={descEl}
           class={`border-t border-black mt-2 pt-2 ${
-            descHeight > 153 && !showFullDesc ? "description" : ""
+            (bookDescription.value || bookDescription).length > 540 &&
+            !showFullDesc
+              ? "description"
+              : ""
           }`}
         >
-          {olData.description.value || olData.description}
+          {bookDescription.value || bookDescription}
         </p>
-        <button
-          class="text-green-700 w-fit hover:underline"
-          on:click={() => {
-            showFullDesc = !showFullDesc;
-          }}>{showFullDesc ? "Show Less" : "Show More"}</button
-        >
+        {#if (bookDescription.value || bookDescription).length > 540}
+          <button
+            class="text-green-700 w-fit hover:underline"
+            on:click={() => {
+              showFullDesc = !showFullDesc;
+            }}>{showFullDesc ? "Show Less" : "Show More"}</button
+          >
+        {/if}
       {:else}
         <p>No Description Data available</p>
       {/if}
