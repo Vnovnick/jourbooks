@@ -4,6 +4,6 @@
 </script>
 
 <div class="h-fit min-h-full mx-auto w-[1024px] bg-green-50">
-  <NavBar userName={data.username} />
+  <NavBar userName={data.userData.username} />
   <slot />
 </div>

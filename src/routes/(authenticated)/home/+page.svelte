@@ -11,7 +11,7 @@
     queryKey: ["selfShelvedBooks"],
     queryFn: () =>
       axios
-        .get(`${expressServerURL}/v1/book/shelved/all/${data.id}`)
+        .get(`${expressServerURL}/v1/book/shelved/all/${data.userData.id}`)
         .then((res) => res.data),
   });
 
@@ -23,7 +23,7 @@
 
 <div class="flex flex-col px-5 bg-green-50">
   <p class="text-5xl m-auto mt-10">
-    Welcome to Jourbooks {data.username}!!!!!
+    Welcome to Jourbooks {data.userData.username}!!!!!
   </p>
   {#if !$booksQuery.isLoading && $booksQuery.isSuccess}
     <div class="mt-12 flex flex-col gap-y-10">

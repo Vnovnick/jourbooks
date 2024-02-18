@@ -6,7 +6,6 @@
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
   import type { Book } from "$lib/typesAndInterfaces";
-  import { expressServerURL } from "$lib/endpointAssets";
   import { goto } from "$app/navigation";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
 
@@ -14,6 +13,7 @@
   let form: any;
   let bookSearch: string;
   let convertedSearch = "";
+  let selectedPage = 1;
   let searchResponse: any[] = [];
   let numResults: number;
   let bookSearchError: string | null = null;
@@ -22,13 +22,16 @@
 
   const hasQueryParams = $page.url.searchParams.has("q");
 
+  // TODO add page param to search link
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
     isSearching = true;
     searchResponse = [];
     const searchQuery = $page.url.searchParams.get("q");
+    // const pageParam = $page.url.searchParams.get("page") ?? "1";
     if (hasQueryParams && searchQuery && !bookSearch) {
       convertedSearch = searchQuery;
+      // if (pageParam) selectedPage = Number(pageParam);
     } else {
       convertedSearch = bookSearch
         .trim()
@@ -37,23 +40,21 @@
         .join("+");
       const query = new URLSearchParams($page.url.searchParams.toString());
       query.set("q", convertedSearch);
+      // query.set("page", selectedPage.toString());
+      console.log("query params", query);
       goto(`?${query.toString()}`);
     }
 
     if (convertedSearch.length > 0) {
       const res = await axios.get(
-        `https://openlibrary.org/search.json?q=${convertedSearch}`
+        `https://openlibrary.org/search.json?q=${convertedSearch}&page=${selectedPage}`
       );
       console.log(res.data);
 
       if (res.status === 200) {
-        const shelvedBooks = await axios.get(
-          `${expressServerURL}/v1/book/shelved/all/${data.id}`
-        );
-
         searchResponse = res.data.docs.map((doc: any) => {
           const docOlid = doc.key.slice(7);
-          const matchingBook = shelvedBooks.data.find(
+          const matchingBook = data.bookData.find(
             (book: Book) => book.olid === docOlid
           );
           if (matchingBook) {
@@ -71,6 +72,7 @@
   };
 
   $: if ($page.url.searchParams.get("q") && form) form.requestSubmit();
+  // TODO add a way to debounce pagination clicks to avoid multiple search queries
 </script>
 
 <div class="bg-green-50 flex flex-col overflow-auto">
@@ -104,6 +106,29 @@
       }}>Clear Results</button
     >
   </div>
+  <div class="flex mx-auto gap-x-5">
+    <button
+      class="hover:underline"
+      on:click={() => {
+        if (selectedPage > 1) {
+          selectedPage = selectedPage - 1;
+          form.requestSubmit();
+        }
+      }}>Previous</button
+    >
+    <p>
+      {selectedPage}/{Math.ceil(numResults / 100)}
+    </p>
+    <button
+      class="hover:underline"
+      on:click={() => {
+        if (selectedPage < Math.ceil(numResults / 100)) {
+          selectedPage = selectedPage + 1;
+          form.requestSubmit();
+        }
+      }}>Next</button
+    >
+  </div>
   {#if isSearching}
     <div class="mt-24 mx-auto">
       <Jellyfish size="100" color="#6ee7b7" unit="px" duration="3s" />
@@ -112,7 +137,7 @@
   {#if searchResponse.length > 0}
     <div class="min-h overflow-auto px-5 flex flex-col gap-y-3">
       {#each searchResponse as book}
-        <BookSearchEntry {book} userId={data.id} />
+        <BookSearchEntry {book} userId={data.userData.id} />
       {/each}
     </div>
   {/if}

@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   export let data: PageData;
 
-  const username: string = data.username;
+  const username: string = data.userData.username;
 </script>
 
 <div class="flex flex-col pl-12 pt-12">
@@ -14,7 +14,7 @@
     </div>
     <div class="ml-10">
       <p class="font-semibold">{username}</p>
-      <p>{data.email}</p>
+      <p>{data.userData.email}</p>
     </div>
   </div>
 </div>
