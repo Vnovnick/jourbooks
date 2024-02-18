@@ -8,6 +8,7 @@
   import type { Book } from "$lib/typesAndInterfaces";
   import { goto } from "$app/navigation";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
+  import SearchPageNavigation from "./SearchPageNavigation.svelte";
 
   let isSearching = false;
   let form: any;
@@ -21,6 +22,7 @@
     searchPlaceholders[Math.floor(Math.random() * searchPlaceholders.length)];
 
   const hasQueryParams = $page.url.searchParams.has("q");
+  let totalPages = 1;
 
   // TODO add page param to search link
   const handleBookSearch = async (e: SubmitEvent) => {
@@ -72,6 +74,9 @@
   };
 
   $: if ($page.url.searchParams.get("q") && form) form.requestSubmit();
+  $: totalPages = isNaN(Math.ceil(numResults / 100))
+    ? 1
+    : Math.ceil(numResults / 100);
   // TODO add a way to debounce pagination clicks to avoid multiple search queries
 </script>
 
@@ -106,29 +111,15 @@
       }}>Clear Results</button
     >
   </div>
-  <div class="flex mx-auto gap-x-5">
-    <button
-      class="hover:underline"
-      on:click={() => {
-        if (selectedPage > 1) {
-          selectedPage = selectedPage - 1;
-          form.requestSubmit();
-        }
-      }}>Previous</button
-    >
-    <p>
-      {selectedPage}/{Math.ceil(numResults / 100)}
-    </p>
-    <button
-      class="hover:underline"
-      on:click={() => {
-        if (selectedPage < Math.ceil(numResults / 100)) {
-          selectedPage = selectedPage + 1;
-          form.requestSubmit();
-        }
-      }}>Next</button
-    >
-  </div>
+  {#if hasQueryParams}
+    <SearchPageNavigation
+      {totalPages}
+      {selectedPage}
+      {isSearching}
+      {form}
+      containerClassName="mt-1"
+    />
+  {/if}
   {#if isSearching}
     <div class="mt-24 mx-auto">
       <Jellyfish size="100" color="#6ee7b7" unit="px" duration="3s" />
@@ -140,5 +131,14 @@
         <BookSearchEntry {book} userId={data.userData.id} />
       {/each}
     </div>
+  {/if}
+  {#if hasQueryParams}
+    <SearchPageNavigation
+      {totalPages}
+      {selectedPage}
+      {isSearching}
+      {form}
+      containerClassName="my-5"
+    />
   {/if}
 </div>
