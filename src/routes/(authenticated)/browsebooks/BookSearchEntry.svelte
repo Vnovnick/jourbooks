@@ -19,7 +19,6 @@
   export let book: any;
   export let userId: string;
   const shelveBook = async (rating: number | null, shelfType: ShelfOptions) => {
-    // TODO add a patch to same endpoint in order to update book relationship
     // TODO (additional reminder) handle duplicates in the backend
     const res = await axios.post(
       `${expressServerURL}/v1/book/shelve/${userId}`,

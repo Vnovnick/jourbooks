@@ -24,7 +24,6 @@
   const hasQueryParams = $page.url.searchParams.has("q");
   let totalPages = 1;
 
-  // TODO add a way to debounce pagination clicks to avoid multiple search queries
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
     isSearching = true;
@@ -137,7 +136,7 @@
   {#if searchResponse.length > 0}
     <SearchPageNavigation
       {totalPages}
-      {selectedPage}
+      bind:selectedPage
       {isSearching}
       {form}
       containerClassName="my-5"

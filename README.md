@@ -18,6 +18,8 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 
 ## Completed Features
 
+#### 23'
+
 - Create a simple login
 - Utilize Open Library's Search API to allow users to search for books
 - (12/8) Add shelve "read" books request to entry component and test new endpoint
@@ -27,6 +29,9 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (12/12) improved previous feature of shelving to "read" to instead allow user to shelve to multiple shelf types
   - same check made when searching for books, but now for whatever shelf type assigned
 - (12/21) Incorporate Tanstack Svelte Query and have updating book displays on the homepage
+
+#### 24'
+
 - (1/4) Adding query parameters to browsebooks url
   - viewing a book from the search and then navigating back to the search page will re-run the search
 - (1/11) Created the book journal entry feature for the frontend along with the backend endpoints in the backend
@@ -34,3 +39,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
   - Incorporated a modal component to confirm deletion for entries
 - (1/20) Finished adding functionality for the review tab and the corresponding requests for them in the backend
 - (2/17) Finished visuals for shelved book page and extracted queries to `+page.server.ts` file
+- (2/18) Finished pagination for book search along with page query param values

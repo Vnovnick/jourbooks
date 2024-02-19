@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   export let userName: string;
   let isProfileDropOpen: boolean = false;
 
@@ -16,8 +17,14 @@
 <nav class="mx-auto flex w-4/5 mt-3">
   <div class="flex gap-x-10 items-end">
     <a href="/home" class="text-lg font-semibold">Jourbooks</a>
-    <a href="/home">Home</a>
-    <a href="/browsebooks">Browse Books</a>
+    <a href="/home" class={$page.url.pathname === "/home" ? "underline" : ""}
+      >Home</a
+    >
+    <a
+      href="/browsebooks"
+      class={$page.url.pathname === "/browsebooks" ? "underline" : ""}
+      >Browse Books</a
+    >
   </div>
   <div class="ml-auto relative w-44 items-end flex flex-col">
     <button
