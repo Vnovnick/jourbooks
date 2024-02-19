@@ -24,25 +24,27 @@
   const hasQueryParams = $page.url.searchParams.has("q");
   let totalPages = 1;
 
-  // TODO add page param to search link
+  // TODO add a way to debounce pagination clicks to avoid multiple search queries
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
     isSearching = true;
     searchResponse = [];
     const searchQuery = $page.url.searchParams.get("q");
-    // const pageParam = $page.url.searchParams.get("page") ?? "1";
+    const pageParam = $page.url.searchParams.get("page");
+    const query = new URLSearchParams($page.url.searchParams.toString());
     if (hasQueryParams && searchQuery && !bookSearch) {
       convertedSearch = searchQuery;
-      // if (pageParam) selectedPage = Number(pageParam);
+      if (pageParam) selectedPage = Number(pageParam);
+      query.set("page", selectedPage.toString());
+      goto(`?${query.toString()}`);
     } else {
       convertedSearch = bookSearch
         .trim()
         .split(" ")
         .filter((s) => !!s.length)
         .join("+");
-      const query = new URLSearchParams($page.url.searchParams.toString());
       query.set("q", convertedSearch);
-      // query.set("page", selectedPage.toString());
+      query.set("page", selectedPage.toString());
       console.log("query params", query);
       goto(`?${query.toString()}`);
     }
@@ -77,7 +79,6 @@
   $: totalPages = isNaN(Math.ceil(numResults / 100))
     ? 1
     : Math.ceil(numResults / 100);
-  // TODO add a way to debounce pagination clicks to avoid multiple search queries
 </script>
 
 <div class="bg-green-50 flex flex-col overflow-auto">
@@ -108,13 +109,14 @@
       class={primaryActionButton}
       on:click={() => {
         searchResponse = [];
+        goto("/browsebooks");
       }}>Clear Results</button
     >
   </div>
-  {#if hasQueryParams}
+  {#if searchResponse.length > 0}
     <SearchPageNavigation
       {totalPages}
-      {selectedPage}
+      bind:selectedPage
       {isSearching}
       {form}
       containerClassName="mt-1"
@@ -132,7 +134,7 @@
       {/each}
     </div>
   {/if}
-  {#if hasQueryParams}
+  {#if searchResponse.length > 0}
     <SearchPageNavigation
       {totalPages}
       {selectedPage}

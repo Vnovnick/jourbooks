@@ -12,6 +12,17 @@
     disabled={isSearching}
     on:click={() => {
       if (selectedPage > 1) {
+        selectedPage = 1;
+        form.requestSubmit();
+      }
+    }}>First</button
+  >
+  |
+  <button
+    class="hover:underline"
+    disabled={isSearching}
+    on:click={() => {
+      if (selectedPage > 1) {
         selectedPage = selectedPage - 1;
         form.requestSubmit();
       }
@@ -29,5 +40,16 @@
         form.requestSubmit();
       }
     }}>Next</button
+  >
+  |
+  <button
+    class="hover:underline"
+    disabled={isSearching}
+    on:click={() => {
+      if (selectedPage < totalPages) {
+        selectedPage = totalPages;
+        form.requestSubmit();
+      }
+    }}>Last</button
   >
 </div>
