@@ -7,6 +7,8 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 ## Currently In-Progress Features
 
 - Profile Page View and Editing
+  - Book shelf
+  - Separate /profile/edit route
 
 ## Backlogged Issues (TODOs)
 
@@ -36,3 +38,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (1/20) Finished adding functionality for the review tab and the corresponding requests for them in the backend
 - (2/17) Finished visuals for shelved book page and extracted queries to `+page.server.ts` file
 - (2/18) Finished pagination for book search along with page query param values
+- (2/19) Created Profile book shelf view
