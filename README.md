@@ -6,15 +6,11 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 
 ## Currently In-Progress Features
 
-- Updating Shelved Book info from book view page
+- Profile Page View and Editing
 
-### Backlogged Issues (TODOs)
+## Backlogged Issues (TODOs)
 
 [Enhancement/backlogged issues](https://github.com/Vnovnick/jourbooks/issues)
-
-## Pushed Back in priority
-
-- Profile Page
 
 ## Completed Features
 
