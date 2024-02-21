@@ -10,10 +10,14 @@
     "bg-amber-100",
     "bg-orange-100",
   ];
+
+  // temporary workaround to create a consistent character limit and predictable spine width
+  const textLimit = 38;
 </script>
 
 <a
   href={`/home/${book.id}`}
+  id={`profile-book-${book.id}`}
   class={`spine border border-black h-44 px-1.5 py-1 ${
     randomSpineColors[Math.floor(Math.random() * randomSpineColors.length)]
   }`}
@@ -30,7 +34,8 @@
     showImage = false;
   }}
 >
-  {book.title}
+  {book.title.slice(0, textLimit) +
+    (book.title.length > textLimit ? "..." : "")}
 </a>
 {#if showImage}
   {#if book.cover_key}

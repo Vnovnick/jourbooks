@@ -39,3 +39,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (2/17) Finished visuals for shelved book page and extracted queries to `+page.server.ts` file
 - (2/18) Finished pagination for book search along with page query param values
 - (2/19) Created Profile book shelf view
+  - (2/20) Finish styling and create function to dynamically add more shelves in order to avoid horizontal scroll

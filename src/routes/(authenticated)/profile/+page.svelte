@@ -1,29 +1,56 @@
 <script lang="ts">
   import { ShelfOptions } from "$lib/typesAndInterfaces";
   import type { Book } from "$lib/typesAndInterfaces";
+  import { onMount } from "svelte";
   import type { PageData } from "./$types";
   import ShelvedBookSpine from "./ShelvedBookSpine.svelte";
+  import {
+    ProfileSubNavTab,
+    getBooksByShelf,
+    orderShelves,
+  } from "./profileDefinitions";
+  import SubNavProfileTabs from "./SubNavProfileTabs.svelte";
   export let data: PageData;
+  let subNav = ProfileSubNavTab.BOOKSHELF;
 
   const { userData } = data;
   const { bookData } = data;
   const username: string = userData.username;
-  console.log(bookData);
-  const reading = bookData.filter(
-    (book: Book) => book.shelf_type === ShelfOptions.CURRENTLY_READING
-  );
-  const read = bookData.filter(
-    (book: Book) => book.shelf_type === ShelfOptions.READ
-  );
-  const wantToRead = bookData.filter(
-    (book: Book) => book.shelf_type === ShelfOptions.WANT_TO_READ
-  );
-  const shelves = [
-    { text: "Currently Reading", books: reading },
-    { text: "Read", books: read },
-    { text: "Want To Read", books: wantToRead },
-  ];
-  // TODO add vertical spine text and hover effect for shelf
+  let shelfWidth: number;
+  let shelves: { text: string; shelf: Book[][] }[];
+
+  const reading = getBooksByShelf(bookData, ShelfOptions.CURRENTLY_READING);
+  const read = getBooksByShelf(bookData, ShelfOptions.READ);
+  const wantToRead = getBooksByShelf(bookData, ShelfOptions.WANT_TO_READ);
+
+  onMount(() => {
+    const limit = Math.ceil(shelfWidth! / 62);
+    shelves = [
+      {
+        text: "Currently Reading",
+        shelf: orderShelves(reading, limit),
+      },
+      { text: "Read", shelf: orderShelves(read, limit) },
+      {
+        text: "Want To Read",
+        shelf: orderShelves(wantToRead, limit),
+      },
+    ];
+  });
+  $: if (shelfWidth) {
+    const limit = Math.ceil(shelfWidth! / 62);
+    shelves = [
+      {
+        text: "Currently Reading",
+        shelf: orderShelves(reading, limit),
+      },
+      { text: "Read", shelf: orderShelves(read, limit) },
+      {
+        text: "Want To Read",
+        shelf: orderShelves(wantToRead, limit),
+      },
+    ];
+  }
 </script>
 
 <div class="flex flex-col pt-10 px-12">
@@ -38,17 +65,27 @@
       <p>{userData.email}</p>
     </div>
   </div>
-  <p class="text-2xl border-b border-black mt-2">
-    Shelved Books: {bookData.length}
-  </p>
-  {#each shelves as shelf}
-    <div class="w-full mt-2 border-b border-black">
-      <p class="text-center text-lg mb-2">{shelf.text}</p>
-      <div class="flex gap-x-0.5">
-        {#each shelf.books as book}
-          <ShelvedBookSpine {book} />
-        {/each}
+  <SubNavProfileTabs bind:subNav />
+  {#if shelves}
+    {#each shelves as category}
+      <div
+        class="w-full mt-2 mb-5 border-b border-black"
+        bind:clientWidth={shelfWidth}
+      >
+        <p class="text-center text-lg mb-2">
+          {category.text} ({category.shelf.flat().length})
+        </p>
+        <div>
+          {#each category.shelf as books}
+            <div class="flex gap-x-0.5">
+              {#each books as book}
+                <ShelvedBookSpine {book} />
+              {/each}
+            </div>
+            <div class="grow border border-black h-4" />
+          {/each}
+        </div>
       </div>
-    </div>
-  {/each}
+    {/each}
+  {/if}
 </div>
