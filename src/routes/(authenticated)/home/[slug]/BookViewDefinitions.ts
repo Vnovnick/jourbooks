@@ -1,3 +1,5 @@
+import { ShelfOptions } from "$lib/typesAndInterfaces";
+
 export const subNavigationTabs =
   "border-t border-r border-l border-b border-black border-b-transparent bg-green-50 ";
 
@@ -22,5 +24,24 @@ export const tabsConfig = [
   {
     val: SubNavTab.REVIEW,
     text: "Your Review",
+  },
+];
+
+export const inputShelfOptionsConfig = [
+  {
+    text: "Read",
+    value: ShelfOptions.READ,
+  },
+  {
+    text: "Currently Reading",
+    value: ShelfOptions.CURRENTLY_READING,
+  },
+  {
+    text: "Want to Read",
+    value: ShelfOptions.WANT_TO_READ,
+  },
+  {
+    text: "Remove Shelf Selection",
+    value: undefined,
   },
 ];

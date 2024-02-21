@@ -31,4 +31,6 @@ export interface JournalEntry {
   id: string;
   title: string;
   text: string;
+  page_number: number;
+  shelf_type: ShelfOptions;
 }

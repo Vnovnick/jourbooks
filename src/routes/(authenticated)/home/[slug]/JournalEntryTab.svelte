@@ -9,6 +9,7 @@
     useQueryClient,
   } from "@tanstack/svelte-query";
   import EntryForm from "./EntryForm.svelte";
+  import type { ShelfOptions } from "$lib/typesAndInterfaces";
 
   export let bookId: string;
   export let userId: string;
@@ -16,6 +17,8 @@
   let showNewEntryForm = false;
   let entryTitle = "";
   let entryContent = "";
+  let entryPageNumber: number;
+  let entryShelfType: ShelfOptions | undefined = undefined;
   const queryClient = useQueryClient();
 
   const bookPostsQuery = createQuery({
@@ -53,6 +56,8 @@
       title: entryTitle,
       text: entryContent,
       userId,
+      pageNumber: entryPageNumber,
+      shelfType: entryShelfType,
     };
     $createBookJournalEntry.mutate(body);
   };
@@ -65,7 +70,13 @@
   }}>{showNewEntryForm ? "Cancel" : "Create a New Journal Entry"}</button
 >
 {#if showNewEntryForm}
-  <EntryForm {handleSubmit} bind:entryContent bind:entryTitle />
+  <EntryForm
+    {handleSubmit}
+    bind:entryContent
+    bind:entryTitle
+    bind:entryPageNumber
+    bind:entryShelfType
+  />
 {/if}
 {#if $bookPostsQuery.isSuccess && !$bookPostsQuery.isLoading && postsData}
   {#each postsData as post}

@@ -9,6 +9,10 @@
   import edit from "$lib/images/ctas/edit.svg";
   import Modal from "$lib/uiComponents/Modal.svelte";
   import EditEntryForm from "./EditEntryForm.svelte";
+  import {
+    formatShelfOptionButton,
+    formatShelfOptionsEnumString,
+  } from "$lib/formattingFunctions";
 
   export let post: JournalEntry;
   export let userId: string;
@@ -82,9 +86,21 @@
     />
   {/if}
   {#if !isEditing}
-    <p>{post.title}</p>
+    {#if post.shelf_type}
+      <p
+        class={`${primaryActionButton} w-fit ${formatShelfOptionButton(
+          post.shelf_type
+        )}`}
+      >
+        {formatShelfOptionsEnumString(post.shelf_type)}
+      </p>
+    {/if}
+    <p class="mt-2 text-lg">{post.title}</p>
     <p>{post.text}</p>
-    <div class="flex justify-between mt-2">
+    {#if post.page_number}
+      <p class="text-sm mt-2">Page No: {post.page_number}</p>
+    {/if}
+    <div class={`flex justify-between ${post.page_number ? "" : "mt-2"}`}>
       <div class="flex text-sm">
         <em
           >created: {dayjs(Number(post.created_at)).format(

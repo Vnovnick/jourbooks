@@ -55,6 +55,7 @@
     {handleSubmit}
     bind:entryContent={newReviewText}
     bind:entryTitle={newReviewTitle}
+    isReview
   />
 {/if}
 {#if reviewData}
