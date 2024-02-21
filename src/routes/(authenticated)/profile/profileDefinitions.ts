@@ -16,6 +16,8 @@ export const orderShelves = (shelvedBooks: Book[], shelfLimit: number) => {
 
 export enum ProfileSubNavTab {
   BOOKSHELF,
+  POSTS,
+  REVIEWS,
 }
 
 export const getBooksByShelf = (arr: Book[], shelf: ShelfOptions) =>
@@ -37,5 +39,13 @@ export const tabsConfig = [
   {
     text: "Bookshelf",
     val: ProfileSubNavTab.BOOKSHELF,
+  },
+  {
+    text: "Posts",
+    val: ProfileSubNavTab.POSTS,
+  },
+  {
+    text: "Reviews",
+    val: ProfileSubNavTab.REVIEWS,
   },
 ];
