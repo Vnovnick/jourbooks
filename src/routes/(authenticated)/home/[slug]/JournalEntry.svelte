@@ -26,7 +26,11 @@
   let isEditing = false;
   let editTitle = post.title;
   let editText = post.text;
+  let editPageNumber = post.page_number;
+  let editShelfType = post.shelf_type;
   const queryClient = useQueryClient();
+
+  console.log(editPageNumber);
 
   const deleteJournalEntry = createMutation({
     mutationFn: (postId: string) => {
@@ -56,6 +60,8 @@
         {
           title: editTitle,
           text: editText,
+          pageNumber: editPageNumber,
+          shelfType: editShelfType,
         }
       );
     },
@@ -80,25 +86,31 @@
       bind:editText
       bind:editTitle
       bind:isEditing
+      bind:editPageNumber
+      bind:editShelfType
       originalText={post.text}
       originalTitle={post.title}
+      originalPageNumber={post.page_number}
+      originalShelfType={post.shelf_type}
       onClickFunc={() => $editJournalEntry.mutate(post.id)}
     />
   {/if}
   {#if !isEditing}
-    {#if post.shelf_type}
-      <p
-        class={`${primaryActionButton} w-fit ${formatShelfOptionButton(
-          post.shelf_type
-        )}`}
-      >
-        {formatShelfOptionsEnumString(post.shelf_type)}
-      </p>
-    {/if}
     <p class="mt-2 text-lg">{post.title}</p>
     <p>{post.text}</p>
     {#if post.page_number}
-      <p class="text-sm mt-2">Page No: {post.page_number}</p>
+      <p class="text-base mt-2">
+        Page No: {post.page_number}
+      </p>
+    {/if}
+    {#if post.shelf_type}
+      <p
+        class={`${primaryActionButton} ${
+          post.page_number ? "" : "mt-2"
+        } w-fit ${formatShelfOptionButton(post.shelf_type)}`}
+      >
+        {formatShelfOptionsEnumString(post.shelf_type)}
+      </p>
     {/if}
     <div class={`flex justify-between ${post.page_number ? "" : "mt-2"}`}>
       <div class="flex text-sm">

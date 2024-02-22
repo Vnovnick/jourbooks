@@ -2,13 +2,14 @@
   import axios from "axios";
   import dayjs from "dayjs";
   import type { Review } from "$lib/typesAndInterfaces";
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { createMutation } from "@tanstack/svelte-query";
   import { expressServerURL } from "$lib/endpointAssets";
   import { primaryActionButton } from "$lib/standardStyles";
   import trash from "$lib/images/ctas/trash.svg";
   import edit from "$lib/images/ctas/edit.svg";
   import EditEntryForm from "./EditEntryForm.svelte";
   import Modal from "$lib/uiComponents/Modal.svelte";
+  import { invalidateAll } from "$app/navigation";
 
   export let reviewData: Review;
   export let userId: string;
@@ -22,7 +23,6 @@
   let isEditing = false;
   let isEditLoading = false;
   let isDeleteLoading = false;
-  const queryClient = useQueryClient();
 
   const deleteReview = createMutation({
     mutationFn: (reviewId: string) => {
@@ -40,8 +40,9 @@
       isDeleteLoading = false;
       console.log("Error deleting review");
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
+    onSettled: () => {
+      invalidateAll();
+    },
   });
 
   const editReview = createMutation({
@@ -63,8 +64,9 @@
       isEditLoading = false;
       console.log("Error editing review");
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
+    onSettled: () => {
+      invalidateAll();
+    },
   });
 </script>
 
@@ -77,6 +79,7 @@
       originalText={reviewData.text}
       originalTitle={reviewData.title}
       onClickFunc={() => $editReview.mutate(reviewData.id)}
+      isReview
     />
   {/if}
   {#if !isEditing}

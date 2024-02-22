@@ -10,6 +10,11 @@
   export let entryShelfType: ShelfOptions | undefined = undefined;
   export let isReview: boolean = false;
   let isShelfDropOpen = false;
+  let isSaveDisabled = true;
+
+  $: isSaveDisabled = isReview
+    ? !entryTitle || !entryContent
+    : !entryTitle || !entryContent || typeof entryPageNumber !== "number";
 </script>
 
 <form class="flex flex-col mb-5" on:submit|preventDefault={handleSubmit}>
@@ -74,8 +79,6 @@
   <button
     type="submit"
     class="bg-black py-2 px-4 w-fit text-white mt-3 disabled:opacity-50"
-    disabled={!entryTitle ||
-      !entryContent ||
-      typeof entryPageNumber !== "number"}>Save</button
+    disabled={isSaveDisabled}>Save</button
   >
 </form>

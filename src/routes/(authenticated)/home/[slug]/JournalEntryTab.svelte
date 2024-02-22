@@ -17,7 +17,7 @@
   let showNewEntryForm = false;
   let entryTitle = "";
   let entryContent = "";
-  let entryPageNumber: number;
+  let entryPageNumber: number | undefined = undefined;
   let entryShelfType: ShelfOptions | undefined = undefined;
   const queryClient = useQueryClient();
 
@@ -38,6 +38,8 @@
     onSuccess: () => {
       entryTitle = "";
       entryContent = "";
+      entryPageNumber = undefined;
+      entryShelfType = undefined;
       showNewEntryForm = false;
     },
     onSettled: () =>

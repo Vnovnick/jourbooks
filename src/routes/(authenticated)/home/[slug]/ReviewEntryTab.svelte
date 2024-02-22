@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { Review } from "$lib/typesAndInterfaces";
+  import { invalidateAll } from "$app/navigation";
   import { primaryActionButton } from "$lib/standardStyles";
   import BookReviewEntry from "./BookReviewEntry.svelte";
   import EntryForm from "./EntryForm.svelte";
-  import { createMutation, useQueryClient } from "@tanstack/svelte-query";
+  import { createMutation } from "@tanstack/svelte-query";
   import axios from "axios";
   import { expressServerURL } from "$lib/endpointAssets";
 
@@ -14,8 +15,6 @@
   let newReviewTitle = "";
   let newReviewText = "";
   let showWriteReviewForm = false;
-
-  const queryClient = useQueryClient();
 
   const createBookReview = createMutation({
     mutationFn: (postData: { title: string; text: string; userId: string }) =>
@@ -28,8 +27,9 @@
       newReviewText = "";
       showWriteReviewForm = false;
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBook"] }),
+    onSettled: () => {
+      invalidateAll();
+    },
   });
 
   const handleSubmit = () => {
