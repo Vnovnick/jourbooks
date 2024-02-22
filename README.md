@@ -43,3 +43,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (2/19) Created Profile book shelf view
   - (2/20) Finish styling and create function to dynamically add more shelves in order to avoid horizontal scroll
 - (2/21) Add page number and shelf type to journal forms along with fields in the db
+- (2/21) Add all Journal Entries endpoint and view for all entries in the profile page
