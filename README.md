@@ -7,8 +7,10 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 ## Currently In-Progress Features
 
 - Profile Page View and Editing
-  - Book shelf
+  - ~~Book shelf~~
   - Separate /profile/edit route
+  - Posts Tab
+  - Reviews Tab
 
 ## Backlogged Issues (TODOs)
 
@@ -40,3 +42,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - (2/18) Finished pagination for book search along with page query param values
 - (2/19) Created Profile book shelf view
   - (2/20) Finish styling and create function to dynamically add more shelves in order to avoid horizontal scroll
+- (2/21) Add page number and shelf type to journal forms along with fields in the db
