@@ -3,11 +3,14 @@
   import { ProfileSubNavTab } from "./profileDefinitions";
   import SubNavProfileTabs from "./SubNavProfileTabs.svelte";
   import ProfileBookShelf from "./ProfileBookShelf.svelte";
+  import ProfilePostsView from "./ProfilePostsView.svelte";
   export let data: PageData;
   let subNav = ProfileSubNavTab.BOOKSHELF;
 
   const { userData } = data;
   const { bookData } = data;
+  const { journalEntries } = data;
+  console.log(journalEntries);
   const username: string = userData.username;
 </script>
 
@@ -26,5 +29,8 @@
   <SubNavProfileTabs bind:subNav />
   {#if subNav === ProfileSubNavTab.BOOKSHELF}
     <ProfileBookShelf {bookData} />
+  {/if}
+  {#if subNav === ProfileSubNavTab.POSTS}
+    <ProfilePostsView {bookData} {journalEntries} userId={userData.id} />
   {/if}
 </div>

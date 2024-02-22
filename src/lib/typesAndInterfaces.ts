@@ -25,7 +25,7 @@ export enum ShelfOptions {
   CURRENTLY_READING = "CURRENTLY_READING",
 }
 
-export interface JournalEntry {
+export interface JournalEntryType {
   created_at: string | number;
   edited_at: string | number;
   id: string;

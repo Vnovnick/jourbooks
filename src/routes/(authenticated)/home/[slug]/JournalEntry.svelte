@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { JournalEntry } from "$lib/typesAndInterfaces";
+  import type { JournalEntryType } from "$lib/typesAndInterfaces";
   import { expressServerURL } from "$lib/endpointAssets";
   import { createMutation, useQueryClient } from "@tanstack/svelte-query";
   import { primaryActionButton } from "$lib/standardStyles";
@@ -14,7 +14,7 @@
     formatShelfOptionsEnumString,
   } from "$lib/formattingFunctions";
 
-  export let post: JournalEntry;
+  export let post: JournalEntryType;
   export let userId: string;
   export let slug: string;
 
@@ -29,8 +29,6 @@
   let editPageNumber = post.page_number;
   let editShelfType = post.shelf_type;
   const queryClient = useQueryClient();
-
-  console.log(editPageNumber);
 
   const deleteJournalEntry = createMutation({
     mutationFn: (postId: string) => {
@@ -97,7 +95,7 @@
   {/if}
   {#if !isEditing}
     <p class="mt-2 text-lg">{post.title}</p>
-    <p>{post.text}</p>
+    <p class="w-[600px]">{post.text}</p>
     {#if post.page_number}
       <p class="text-base mt-2">
         Page No: {post.page_number}
