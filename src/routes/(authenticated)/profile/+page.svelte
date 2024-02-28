@@ -9,8 +9,6 @@
 
   const { userData } = data;
   const { bookData } = data;
-  const { journalEntries } = data;
-  console.log(journalEntries);
   const username: string = userData.username;
 </script>
 
@@ -31,6 +29,6 @@
     <ProfileBookShelf {bookData} />
   {/if}
   {#if subNav === ProfileSubNavTab.POSTS}
-    <ProfilePostsView {bookData} {journalEntries} userId={userData.id} />
+    <ProfilePostsView {bookData} userId={userData.id} />
   {/if}
 </div>

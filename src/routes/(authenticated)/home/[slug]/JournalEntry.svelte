@@ -17,6 +17,7 @@
   export let post: JournalEntryType;
   export let userId: string;
   export let slug: string;
+  export let onEditSettled: () => void = () => {};
 
   let dialog: HTMLDialogElement;
 
@@ -46,8 +47,10 @@
       isDeleteLoading = false;
       console.log("Error deleting post");
     },
-    onSettled: () =>
-      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] }),
+    onSettled: () => {
+      onEditSettled();
+      queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] });
+    },
   });
 
   const editJournalEntry = createMutation({
@@ -73,6 +76,7 @@
     },
     onSettled: () => {
       showModal = false;
+      onEditSettled();
       queryClient.invalidateQueries({ queryKey: ["specificBookPosts"] });
     },
   });

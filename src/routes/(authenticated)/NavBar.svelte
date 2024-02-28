@@ -25,7 +25,12 @@
       class={$page.url.pathname === "/browsebooks" ? "underline" : ""}
       >Browse Books</a
     >
+    <a
+      href="/profile"
+      class={$page.url.pathname === "/profile" ? "underline" : ""}>Profile</a
+    >
   </div>
+
   <div class="ml-auto relative w-44 items-end flex flex-col">
     <button
       type="button"
@@ -41,7 +46,6 @@
         class="border-black border flex flex-col gap-y-3 p-3 absolute w-full bg-green-50 mt-12"
         id="nav-dropdown"
       >
-        <a href="/profile" on:click={handleDropClose}>Profile</a>
         <form action="?/logout" method="post">
           <button type="submit">Logout</button>
         </form>

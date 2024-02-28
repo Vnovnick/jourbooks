@@ -16,7 +16,6 @@
   export let editPageNumber: number | undefined = undefined;
   export let editShelfType: ShelfOptions | undefined = undefined;
 
-  console.log(editPageNumber);
   let saveDisabled = true;
 
   $: saveDisabled =
