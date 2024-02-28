@@ -37,18 +37,21 @@
     {#each combinedData as post}
       <div class="flex pb-2.5">
         {#if post.bookInfo}
-          <div class="w-[220px] flex flex-col items-center text-center">
+          <a
+            href={`/home/${post.bookInfo.id}`}
+            class="w-[220px] flex flex-col items-center text-center group"
+          >
             <img
               loading="lazy"
               src={`https://covers.openlibrary.org/b/olid/${post.bookInfo.cover_key}-M.jpg`}
               alt={`Cover for ${post.bookInfo.title}`}
               class="h-[180px] w-36 object-scale-down"
             />
-            <div>
+            <div class="group-hover:underline">
               <p class="text-lg">{post.bookInfo.title}</p>
               <p>{post.bookInfo.author}</p>
             </div>
-          </div>
+          </a>
           <div class="grow">
             {#each post.entries as entry}
               <JournalEntry
