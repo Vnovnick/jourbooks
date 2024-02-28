@@ -2,10 +2,11 @@
   import axios from "axios";
   import type { JournalEntryType, Book } from "$lib/typesAndInterfaces";
   import { createQuery, useQueryClient } from "@tanstack/svelte-query";
-  import JournalEntry from "../home/[slug]/JournalEntry.svelte";
+  import JournalEntry from "../../home/[slug]/JournalEntry.svelte";
   import { expressServerURL } from "$lib/endpointAssets";
-  export let bookData: Book[];
-  export let userId: string;
+  export let data;
+  const bookData: Book[] = data.bookData;
+  const userId: string = data.userData.id;
   let combinedData: {
     bookInfo: Book | undefined;
     entries: JournalEntryType[];

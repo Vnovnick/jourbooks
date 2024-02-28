@@ -17,17 +17,19 @@
 <nav class="mx-auto flex w-4/5 mt-3">
   <div class="flex gap-x-10 items-end">
     <a href="/home" class="text-lg font-semibold">Jourbooks</a>
-    <a href="/home" class={$page.url.pathname === "/home" ? "underline" : ""}
-      >Home</a
+    <a
+      href="/home"
+      class={$page.url.pathname.startsWith("/home") ? "underline" : ""}>Home</a
     >
     <a
       href="/browsebooks"
-      class={$page.url.pathname === "/browsebooks" ? "underline" : ""}
+      class={$page.url.pathname.startsWith("/browsebooks") ? "underline" : ""}
       >Browse Books</a
     >
     <a
       href="/profile"
-      class={$page.url.pathname === "/profile" ? "underline" : ""}>Profile</a
+      class={$page.url.pathname.startsWith("/profile") ? "underline" : ""}
+      >Profile</a
     >
   </div>
 

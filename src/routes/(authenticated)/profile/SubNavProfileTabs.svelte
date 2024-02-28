@@ -1,19 +1,15 @@
 <script lang="ts">
-  import {
-    ProfileSubNavTab,
-    setProfileSubNavStyling,
-    tabsConfig,
-  } from "./profileDefinitions";
-
-  export let subNav: ProfileSubNavTab;
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { setProfileSubNavStyling, tabsConfig } from "./profileDefinitions";
 </script>
 
 <div class="flex mt-5 border-b border-black">
   {#each tabsConfig as tab}
     <button
-      class={setProfileSubNavStyling(subNav, tab.val)}
+      class={setProfileSubNavStyling($page.url.pathname, tab.goto)}
       on:click={() => {
-        subNav = tab.val;
+        goto(tab.goto);
       }}>{tab.text}</button
     >
   {/each}

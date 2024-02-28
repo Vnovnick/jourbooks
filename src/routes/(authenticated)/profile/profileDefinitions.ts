@@ -26,12 +26,9 @@ export const getBooksByShelf = (arr: Book[], shelf: ShelfOptions) =>
 export const subNavigationTabs =
   "border-t border-r border-l border-b border-black border-b-transparent bg-green-50 ";
 
-export const setProfileSubNavStyling = (
-  tabVal: ProfileSubNavTab,
-  buttonVal: ProfileSubNavTab
-) => {
+export const setProfileSubNavStyling = (path: string, buttonVal: string) => {
   return `px-3 py-2 box-content -mb-[1px] ${
-    tabVal === buttonVal ? "" : "border-transparent bg-transparent"
+    path === buttonVal ? "" : "border-transparent bg-transparent"
   } ${subNavigationTabs}`;
 };
 
@@ -39,13 +36,16 @@ export const tabsConfig = [
   {
     text: "Bookshelf",
     val: ProfileSubNavTab.BOOKSHELF,
+    goto: "/profile",
   },
   {
     text: "Posts",
     val: ProfileSubNavTab.POSTS,
+    goto: "/profile/posts",
   },
   {
     text: "Reviews",
     val: ProfileSubNavTab.REVIEWS,
+    goto: "/profile/reviews",
   },
 ];
