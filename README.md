@@ -9,7 +9,7 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
 - Profile Page View and Editing
   - ~~Book shelf~~
   - Separate /profile/edit route
-  - Posts Tab
+  - ~~Posts Tab~~
   - Reviews Tab
 
 ## Backlogged Issues (TODOs)
@@ -44,3 +44,4 @@ Following this [link](https://github.com/Vnovnick/jourbooks_backend) will take y
   - (2/20) Finish styling and create function to dynamically add more shelves in order to avoid horizontal scroll
 - (2/21) Add page number and shelf type to journal forms along with fields in the db
 - (2/21) Add all Journal Entries endpoint and view for all entries in the profile page
+- (2/27) Add nested routes for profile tabs and add invalidation to post edits and deletions from the `/profile/posts` route
