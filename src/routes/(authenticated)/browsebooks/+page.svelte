@@ -14,7 +14,7 @@
   let form: any;
   let bookSearch: string;
   let convertedSearch = "";
-  let selectedPage = 1;
+  let selectedPage = Number($page.url.searchParams.get("page")) ?? 1;
   let searchResponse: any[] = [];
   let numResults: number;
   let bookSearchError: string | null = null;
@@ -29,11 +29,9 @@
     isSearching = true;
     searchResponse = [];
     const searchQuery = $page.url.searchParams.get("q");
-    const pageParam = $page.url.searchParams.get("page");
     const query = new URLSearchParams($page.url.searchParams.toString());
     if (hasQueryParams && searchQuery && !bookSearch) {
       convertedSearch = searchQuery;
-      if (pageParam) selectedPage = Number(pageParam);
       query.set("page", selectedPage.toString());
       goto(`?${query.toString()}`);
     } else {
@@ -93,8 +91,13 @@
       {placeholder}
       bind:value={bookSearch}
     />
-    <button type="submit" class={primaryActionButton} disabled={!bookSearch}
-      >Search</button
+    <button
+      type="submit"
+      on:click={() => {
+        selectedPage = 1;
+      }}
+      class={primaryActionButton}
+      disabled={!bookSearch}>Search</button
     >
   </form>
   <div

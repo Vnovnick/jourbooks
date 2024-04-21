@@ -43,9 +43,9 @@ export const tabsConfig = [
     val: ProfileSubNavTab.POSTS,
     goto: "/profile/posts",
   },
-  {
-    text: "Reviews",
-    val: ProfileSubNavTab.REVIEWS,
-    goto: "/profile/reviews",
-  },
+  // {
+  //   text: "Reviews",
+  //   val: ProfileSubNavTab.REVIEWS,
+  //   goto: "/profile/reviews",
+  // },
 ];

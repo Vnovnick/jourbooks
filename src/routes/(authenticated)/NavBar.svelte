@@ -1,17 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
   export let userName: string;
-  let isProfileDropOpen: boolean = false;
-
-  const handleDropOpen = () => {
-    isProfileDropOpen = true;
-    document.body.addEventListener("click", handleDropClose);
-  };
-
-  const handleDropClose = () => {
-    isProfileDropOpen = false;
-    document.body.removeEventListener("click", handleDropClose);
-  };
 </script>
 
 <nav class="mx-auto flex w-4/5 mt-3">
@@ -32,26 +21,14 @@
       >Profile</a
     >
   </div>
-
-  <div class="ml-auto relative w-44 items-end flex flex-col">
-    <button
-      type="button"
-      class="text-base w-9 h-9 rounded-full bg-black flex"
-      on:click|stopPropagation={handleDropOpen}
-    >
+  <div class="ml-auto flex items-end gap-x-10">
+    <form action="?/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+    <div class="text-base w-9 h-9 rounded-full bg-black flex">
       <p class="text-white m-auto">
         {userName[0].toUpperCase()}{userName[1].toUpperCase()}
       </p>
-    </button>
-    {#if isProfileDropOpen}
-      <div
-        class="border-black border flex flex-col gap-y-3 p-3 absolute w-full bg-green-50 mt-12"
-        id="nav-dropdown"
-      >
-        <form action="?/logout" method="post">
-          <button type="submit">Logout</button>
-        </form>
-      </div>
-    {/if}
+    </div>
   </div>
 </nav>
