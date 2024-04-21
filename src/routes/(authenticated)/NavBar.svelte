@@ -22,7 +22,7 @@
     >
   </div>
   <div class="ml-auto flex items-end gap-x-10">
-    <form action="?/logout" method="POST">
+    <form action="/home?/logout" method="POST">
       <button type="submit">Logout</button>
     </form>
     <div class="text-base w-9 h-9 rounded-full bg-black flex">
