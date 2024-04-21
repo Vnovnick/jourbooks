@@ -51,7 +51,7 @@
       <p class="text-center text-lg mb-2">
         {category.text} ({category.shelf.flat().length})
       </p>
-      <div>
+      <div class="min-h-[60px]">
         {#each category.shelf as books}
           <div class="flex gap-x-0.5">
             {#each books as book}

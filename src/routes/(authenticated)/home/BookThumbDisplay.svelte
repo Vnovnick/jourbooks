@@ -24,5 +24,9 @@
       <p class="w-44 truncate">{book.title}</p>
       <p class="w-44 truncate">{book.author}</p>
     </a>
+  {:else}
+    <a href="/browsebooks" class="mx-auto text-xl hover:underline"
+      >Shelve some books to populate this row</a
+    >
   {/each}
 </div>
