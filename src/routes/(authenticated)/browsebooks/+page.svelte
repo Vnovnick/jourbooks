@@ -6,7 +6,7 @@
   import axios from "axios";
   import BookSearchEntry from "./BookSearchEntry.svelte";
   import type { Book } from "$lib/typesAndInterfaces";
-  import { goto, invalidateAll } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Jellyfish from "svelte-loading-spinners/Jellyfish.svelte";
   import SearchPageNavigation from "./SearchPageNavigation.svelte";
 
@@ -26,7 +26,6 @@
 
   const handleBookSearch = async (e: SubmitEvent) => {
     e.preventDefault();
-    invalidateAll();
     isSearching = true;
     searchResponse = [];
     const searchQuery = $page.url.searchParams.get("q");
