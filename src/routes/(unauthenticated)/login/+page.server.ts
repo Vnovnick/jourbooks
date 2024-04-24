@@ -32,8 +32,7 @@ export const actions = {
       cookies.set("session_id", res.data.id, {
         path: "/",
         httpOnly: true,
-        sameSite: "strict",
-        secure: !dev,
+        secure: true,
         maxAge: 60 * 60 * 24 * 7,
       });
       throw redirect(303, "/home");
